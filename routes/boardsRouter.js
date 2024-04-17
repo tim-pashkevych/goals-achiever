@@ -1,14 +1,18 @@
 import { Router } from 'express';
 import board from '../controllers/boardsControllers.js';
+import validateBody from '../decorators/validateBody.js';
+import {
+  addColumnSchema,
+  createSchema,
+  updateSchema,
+} from '../schemas/boardsSchemas.js';
 
 const boardsRouter = Router();
 
-boardsRouter.post('/', board.createBoard);
-boardsRouter.patch('/icon', board.changeTitle);
-boardsRouter.patch('/', board.changeIcon);
-boardsRouter.patch('/owner', board.changeOwner);
+boardsRouter.post('/', validateBody(createSchema), board.createBoard);
+boardsRouter.patch('/', validateBody(updateSchema), board.update);
 boardsRouter.delete('/:id', board.deleteBoard);
-boardsRouter.post('/columns', board.addColumn);
+boardsRouter.post('/columns', validateBody(addColumnSchema), board.addColumn);
 boardsRouter.delete('/:boardId/columns/:columnId', board.deleteColumn);
 
 export default boardsRouter;
