@@ -1,4 +1,4 @@
-import Joi, { required } from 'joi';
+import Joi from 'joi';
 
 import { priority } from '../../constants/index.js';
 
