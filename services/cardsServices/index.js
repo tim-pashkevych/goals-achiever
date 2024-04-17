@@ -4,7 +4,7 @@ import { addCard } from './addCard.js';
 import { removeCard } from './removeCard.js';
 import { upgrateCard } from './upgrateCard.js';
 
-export const cardsSercices = {
+export const cardsServices = {
   getCards: getCards,
   getCardById: getCardById,
   addCard: addCard,
