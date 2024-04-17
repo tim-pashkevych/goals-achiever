@@ -22,4 +22,4 @@ const cardShema = new Schema({
   },
 });
 
-export const Card = model('db-card', cardShema);
+export const Card = model('card', cardShema);
