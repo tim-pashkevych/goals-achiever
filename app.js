@@ -1,16 +1,25 @@
 import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
-import mongoose from 'mongoose';
 import 'dotenv/config';
 import boardsRouter from './routes/boardsRouter.js';
 
-const { DB_HOST, PORT = 3000 } = process.env;
+import { cardsRouter } from './routes/index.js';
+
+const { FRONTEND_URL = '*' } = process.env;
+
+var corsOptions = {
+  origin: FRONTEND_URL,
+  optionsSuccessStatus: 200,
+};
+
 const app = express();
 
 app.use(morgan('tiny'));
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions));
+
+app.use('/cards', cardsRouter);
 
 app.use("/boards", boardsRouter)
 
@@ -23,14 +32,4 @@ app.use((error, _, res, __) => {
   res.status(status).json({ message });
 });
 
-mongoose
-  .connect(DB_HOST)
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log('Database connection established');
-    });
-  })
-  .catch(error => {
-    console.error(error.message);
-    process.exit(1);
-  });
+export default app;
