@@ -3,15 +3,14 @@ import express from 'express';
 import validateBody from '../../decorators/validateBody.js';
 import { cardAddSchema, cardUpdateSchema } from '../../schemas/cards/index.js';
 import { cardsCtrls } from '../../controllers/index.js';
+import { auth } from '../../middlewares/index.js';
 
-export const cardsRouter = express.Router();
+export const cardsRouter = express.Router({ mergeParams: true });
 
-cardsRouter.get('/', cardsCtrls.getCards);
+cardsRouter.post('/', auth, validateBody(cardAddSchema), cardsCtrls.addCard);
 
-cardsRouter.get('/:id', cardsCtrls.getCardById);
+cardsRouter.patch('/:id', auth, validateBody(cardUpdateSchema), cardsCtrls.updateCard);
 
-cardsRouter.post('/', validateBody(cardAddSchema), cardsCtrls.addCard);
+cardsRouter.patch('/:id/move', auth, cardsCtrls.moveCard);
 
-cardsRouter.put('/:id', validateBody(cardUpdateSchema), cardsCtrls.updateCard);
-
-cardsRouter.delete('/:id', cardsCtrls.deleteCard);
+cardsRouter.delete('/:id', auth, cardsCtrls.deleteCard);
