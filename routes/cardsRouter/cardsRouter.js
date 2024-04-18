@@ -11,6 +11,6 @@ cardsRouter.post('/', auth, validateBody(cardAddSchema), cardsCtrls.addCard);
 
 cardsRouter.patch('/:id', auth, validateBody(cardUpdateSchema), cardsCtrls.updateCard);
 
-cardsRouter.patch('/:id', auth, cardsCtrls.updateCardColumn);
+cardsRouter.patch('/:id/move', auth, cardsCtrls.moveCard);
 
 cardsRouter.delete('/:id', auth, cardsCtrls.deleteCard);
