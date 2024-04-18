@@ -2,7 +2,7 @@ import Joi from 'joi';
 
 import { priority } from '../../constants/index.js';
 
-export const cardAddShema = Joi.object({
+export const cardAddSchema = Joi.object({
   title: Joi.string().required(),
   description: Joi.string().required(),
   priority: Joi.string()
