@@ -1,0 +1,141 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "2.0.2",
+    "title": "Task-pro API",
+    "description": "Lorem lorem lorem",
+    "license": {
+      "name": "MIT"
+    }
+  },
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "servers": [{ "url": "http://localhost:3000" }],
+  "tags": [
+    {
+      "name": "Cards",
+      "description": "Cards endpoints"
+    }
+  ],
+  "paths": {
+    "/cards": {
+      "post": {
+        "tags": ["Cards"],
+        "summary": "post new card",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "add new card to collection",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/addCardRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/addCardRespose"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "addCardRequest": {
+        "type": "object",
+        "required": ["title", "description", "priority", "deadline"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Card title",
+            "example": "title"
+          },
+          "description": {
+            "type": "string",
+            "description": "Card description",
+            "example": "description"
+          },
+          "priority": {
+            "type": "string",
+            "description": "Card priority",
+            "example": "low"
+          },
+          "deadline": {
+            "type": "date",
+            "description": "deadline date",
+            "example": "12.13.2024"
+          }
+        }
+      },
+      "addCardRespose": {
+        "type": "object",
+        "required": ["result"],
+        "properties": {
+          "result": {
+            "type": "object",
+            "required": ["title", "description", "priority", "deadline", "_id", "createdAt", "updatedAt"],
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Card title",
+                "example": "title"
+              },
+              "description": {
+                "type": "string",
+                "description": "Card description",
+                "example": "description"
+              },
+              "priority": {
+                "type": "string",
+                "description": "Card priority",
+                "example": "low"
+              },
+              "deadline": {
+                "type": "date",
+                "description": "deadline date",
+                "example": "12.13.2024"
+              },
+              "_id": {
+                "type": "string",
+                "description": "Card id",
+                "example": "662112f285746b0dae1375c0"
+              },
+              "createdAt": {
+                "type": "date",
+                "description": "date card create",
+                "example": "2024-04-18T12:32:51.000Z"
+              },
+              "updatedAt": {
+                "type": "date",
+                "description": "date card update",
+                "example": "2024-04-18T12:32:51.000Z"
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
