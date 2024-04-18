@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 
-const issueShema = new Schema(
+const issueSchema = new Schema(
   {
     owner: {
       type: Schema.Types.ObjectId,
@@ -19,4 +19,4 @@ const issueShema = new Schema(
   { versionKey: false, timestamps: true }
 );
 
-export const Issue = model('issue', issueShema);
+export const Issue = model('issue', issueSchema);
