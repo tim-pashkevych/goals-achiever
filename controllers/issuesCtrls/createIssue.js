@@ -1,5 +1,5 @@
 import ctrlWrapper from '../../decorators/ctrlWrapper.js';
-import { addIssue } from '../../services/issuesServises/issuesServises.js';
+import { addIssue } from '../../services/issuesServises/addIssue.js';
 
 const createIssue = async (req, res) => {
   // const { _id: owner } = req.user;

@@ -1,1 +1,1 @@
-export * from './issuesSchemas.js';
+export * from './issueCreateSchemas.js';

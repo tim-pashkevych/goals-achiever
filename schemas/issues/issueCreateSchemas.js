@@ -2,7 +2,7 @@ import Joi from 'joi';
 
 import { emailRegExp } from '../../constants/index.js';
 
-export const createIssuesSchema = Joi.object({
+export const issueCreateSchema = Joi.object({
   email: Joi.string().pattern(emailRegExp).required(),
   message: Joi.string().required(),
 });
