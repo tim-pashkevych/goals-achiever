@@ -12,7 +12,7 @@ const auth = async (req, _, next) => {
 
   const [bearer, token] = authorization.split(' ');
 
-  if (!bearer) {
+  if (!(bearer === 'bearer' || bearer === 'Bearer')) {
     const bearerError = new CustomError(401, 'Bearer is absent in the authorization header.');
     throw bearerError;
   }
@@ -22,7 +22,7 @@ const auth = async (req, _, next) => {
     throw tokenError;
   }
 
-  const id = jwt.verifyToken(token);
+  const { id } = jwt.verifyToken(token);
 
   const user = await User.findById(id).select('name email avatarURL theme boards token');
 

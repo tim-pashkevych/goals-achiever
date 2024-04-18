@@ -3,7 +3,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import 'dotenv/config';
 
-import { cardsRouter, boardsRouter, columnsRouter, docsRouter } from './routes/index.js';
+import { cardsRouter, boardsRouter, columnsRouter, docsRouter, usersRouter } from './routes/index.js';
 
 const { FRONTEND_URL = '*' } = process.env;
 
@@ -22,6 +22,8 @@ app.use('/', docsRouter);
 app.use('/api/boards', boardsRouter);
 app.use('/api/boards/:boardId/columns', columnsRouter);
 app.use('/api/boards/:boardId/columns/:columnId/cards', cardsRouter);
+
+app.use('/api/users', usersRouter);
 
 app.use((_, res) => {
   res.status(404).json({ message: 'Route not found' });
