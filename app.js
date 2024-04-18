@@ -2,9 +2,8 @@ import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import 'dotenv/config';
-import boardsRouter from './routes/boardsRouter.js';
 
-import { cardsRouter } from './routes/index.js';
+import { cardsRouter, boardsRouter } from './routes/index.js';
 
 const { FRONTEND_URL = '*' } = process.env;
 
@@ -20,8 +19,7 @@ app.use(express.json());
 app.use(cors(corsOptions));
 
 app.use('/cards', cardsRouter);
-
-app.use("/boards", boardsRouter)
+app.use('/boards', boardsRouter);
 
 app.use((_, res) => {
   res.status(404).json({ message: 'Route not found' });
