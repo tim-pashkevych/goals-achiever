@@ -3,7 +3,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import 'dotenv/config';
 
-import { cardsRouter, boardsRouter, issuesRouter } from './routes/index.js';
+import { cardsRouter, boardsRouter, columnsRouter, docsRouter, issuesRouter } from './routes/index.js';
 
 const { FRONTEND_URL = '*' } = process.env;
 
@@ -18,8 +18,10 @@ app.use(morgan('tiny'));
 app.use(express.json());
 app.use(cors(corsOptions));
 
-app.use('/cards', cardsRouter);
-app.use('/boards', boardsRouter);
+app.use('/', docsRouter);
+app.use('/api/boards', boardsRouter);
+app.use('/api/boards/:boardId/columns', columnsRouter);
+app.use('/api/boards/:boardId/columns/:columnId/cards', cardsRouter);
 app.use('/api/issues', issuesRouter);
 
 app.use((_, res) => {
