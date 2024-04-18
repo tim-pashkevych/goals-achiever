@@ -21,7 +21,9 @@ app.use(cors(corsOptions));
 
 app.use('/cards', cardsRouter);
 
-app.use("/boards", boardsRouter)
+app.use('/boards', boardsRouter);
+
+app.use('/columns', columnsRouter);
 
 app.use((_, res) => {
   res.status(404).json({ message: 'Route not found' });
