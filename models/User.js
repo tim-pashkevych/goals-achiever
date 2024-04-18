@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose';
+import { themes } from '../constants/index.js';
 
 const userSchema = new Schema(
   {
@@ -17,10 +18,18 @@ const userSchema = new Schema(
     },
     avatarURL: {
       type: String,
-      required: false,
     },
-    createdAt: { type: Date },
-    updatedAt: { type: Date },
+    theme: {
+      type: String,
+      enum: themes,
+      required: [true, 'Theme is required'],
+    },
+    boards: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'board',
+      },
+    ],
   },
   { versionKey: false, timestamps: true }
 );
