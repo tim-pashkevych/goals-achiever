@@ -17,10 +17,12 @@ const userSchema = new Schema(
     },
     avatarURL: {
       type: String,
-      required: true,
+      required: false,
     },
+    createdAt: { type: Date },
+    updatedAt: { type: Date },
   },
-  { versionKey: false }
+  { versionKey: false, timestamps: true }
 );
 
 export const User = model('user', userSchema);
