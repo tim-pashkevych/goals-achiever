@@ -1,9 +1,9 @@
 import { cardsServices } from '../../services/index.js';
 
-export const getCardById = async (req, res, next) => {
+export const moveCard = async (req, res, next) => {
   const { id } = req.params;
 
-  const card = await cardsServices.getCardById({ _id: id });
+  const card = await cardsServices.updateCard({ _id: id }, req.body);
 
   res.json({
     result: card,

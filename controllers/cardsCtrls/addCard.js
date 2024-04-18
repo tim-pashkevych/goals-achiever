@@ -1,7 +1,9 @@
 import { cardsServices } from '../../services/index.js';
 
 export const addCard = async (req, res, next) => {
-  const newCard = await cardsServices.addCard(req.body);
+  const { boardId, columnId } = req.params;
+
+  const newCard = await cardsServices.addCard({ ...req.body, boardId, columnId }, columnId);
 
   res.status(201).json({
     result: newCard,
