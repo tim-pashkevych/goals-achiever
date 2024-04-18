@@ -1,2 +1,2 @@
-export * from './cardAddShema.js';
-export * from './cardUpdateShema.js';
+export * from './cardAddSchema.js';
+export * from './cardUpdateSchema.js';
