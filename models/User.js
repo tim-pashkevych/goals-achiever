@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { themes } from '../constants/index.js';
+import { emailRegExp, themes } from '../constants/index.js';
 
 const userSchema = new Schema(
   {
@@ -10,6 +10,7 @@ const userSchema = new Schema(
     email: {
       type: String,
       required: [true, 'Email is required'],
+      match: emailRegExp,
       unique: true,
     },
     password: {
