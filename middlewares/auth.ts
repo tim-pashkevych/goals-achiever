@@ -1,8 +1,9 @@
 import { jwt, CustomError } from '../helpers/index.js';
 import { User } from '../models/index.js';
 import { ctrlWrapper } from '../decorators/index.js';
+import { NextFunction, Request, Response } from 'express';
 
-const auth = async (req, _, next) => {
+const auth = async (req: Request, _: Response, next: NextFunction) => {
   const { authorization } = req.headers;
 
   if (!authorization) {
