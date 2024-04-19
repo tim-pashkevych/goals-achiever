@@ -9,6 +9,6 @@ cloudinary.config({
   api_secret: CLOUNDINARY_API_SECRET,
 });
 
-export const transformImage = async (publicId, transformation = {}) => {
-  return await cloudinary.url(publicId, transformation);
+export const removeImage = async publicId => {
+  return await cloudinary.uploader.destroy(publicId, { invalidate: true });
 };
