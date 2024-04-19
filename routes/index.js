@@ -1,6 +1,11 @@
-export * from './cardsRouter/cardsRouter.js';
-export * from './boardsRouter/boardsRouter.js';
-export * from './issuesRouter/issuesRouter.js';
-export * from './columnsRoute/columnsRouter.js';
+import { Router } from 'express';
+import { cardsRouter, boardsRouter, columnsRouter, usersRouter, issuesRouter } from './v1/index.js';
+
 export * from './docsRouter/docsRouter.js';
-export { default as usersRouter } from './usersRouter/usersRouter.js';
+export const routerV1 = Router();
+
+routerV1.use(usersRouter);
+routerV1.use(boardsRouter);
+routerV1.use(columnsRouter);
+routerV1.use(cardsRouter);
+routerV1.use(issuesRouter);
