@@ -1,7 +1,7 @@
 import { v2 as cloudinary } from 'cloudinary';
 import 'dotenv/config';
 
-const { CLOUNDINARY_CLOUD_NAME, CLOUNDINARY_API_KEY, CLOUNDINARY_API_SECRET } = process.env;
+const { CLOUNDINARY_CLOUD_NAME, CLOUNDINARY_API_KEY, CLOUNDINARY_API_SECRET, CLOUNDINARY_ASSETS_FOLDER } = process.env;
 
 cloudinary.config({
   cloud_name: CLOUNDINARY_CLOUD_NAME,
@@ -10,9 +10,10 @@ cloudinary.config({
 });
 
 export const uploadImage = async (publicId, imagePath) => {
-  const options = { public_id: publicId, asset_folder: '/taskpro/avatars/' };
+  const options = {
+    public_id: 'avatar',
+    folder: `${CLOUNDINARY_ASSETS_FOLDER}/${publicId}/`,
+  };
 
-  const result = await cloudinary.uploader.upload(imagePath, options);
-
-  return result.public_id;
+  return await cloudinary.uploader.upload(imagePath, options);
 };
