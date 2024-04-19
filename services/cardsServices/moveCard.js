@@ -4,9 +4,10 @@ import { Column } from '../../models/Column.js';
 export const moveCard = async (cardId, columnId, newColumnId) => {
   const movedCard = await Card.findOneAndUpdate(
     { _id: cardId },
-    { columnId: columnId },
+    { columnId: newColumnId },
     {
       new: true,
+      fields: 'columnId',
     }
   );
   await Column.findByIdAndUpdate(columnId, { $pull: { cards: cardId } });
