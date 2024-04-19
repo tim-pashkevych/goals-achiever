@@ -10,8 +10,10 @@ export const moveCard = async (cardId, columnId, newColumnId) => {
       fields: 'columnId',
     }
   );
-  await Column.findByIdAndUpdate(columnId, { $pull: { cards: cardId } });
+  if (movedCard) {
+    await Column.findByIdAndUpdate(columnId, { $pull: { cards: cardId } });
+    await Column.findByIdAndUpdate(newColumnId, { $push: { cards: cardId } });
+  }
 
-  await Column.findByIdAndUpdate(newColumnId, { $push: { cards: cardId } });
   return movedCard;
 };
