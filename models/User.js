@@ -16,9 +16,10 @@ const userSchema = new Schema(
       type: String,
       required: [true, 'Password is required'],
     },
+    cloudinaryPublicId: { type: String },
     avatarURL: {
       type: String,
-      default: 'https://www.w3schools.com/howto/img_avatar.png',
+      default: null,
     },
     theme: {
       type: String,

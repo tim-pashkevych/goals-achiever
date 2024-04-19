@@ -1,18 +1,18 @@
 import fs from 'fs/promises';
 
-import { cloudinaryServices } from '../../services/cloudinaryServices/index.js';
 import { usersServices } from '../../services/usersServices/index.js';
+import { cloudinaryServices } from '../../services/cloudinaryServices/index.js';
 
 export const updateAvatar = async (req, res) => {
   const { _id: userId } = req.user;
   const { path } = req.file;
 
-  const image = await cloudinaryServices.uploadImage(userId, path);
+  const cloudinaryPublicId = await usersServices.uploadAvatar(userId, path);
   await fs.rm(path);
 
-  const { secure_url: avatarURL } = image;
+  const avatarURL = await cloudinaryServices.transformImage(cloudinaryPublicId);
 
-  const user = await usersServices.updateUser({ _id: userId }, { avatarURL });
+  const user = await usersServices.updateUser({ _id: userId }, { avatarURL, cloudinaryPublicId });
 
   res.json({
     result: { avatarURL: user.avatarURL },
