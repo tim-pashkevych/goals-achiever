@@ -1,6 +1,6 @@
 {
   "watch": ["."],
-  "ext": ".ts, .js",
+  "ext": ".ts, .js, .json",
   "ignore": ["node_modules/*", "dist/*"],
   "exec": "tsc && node"
 }
