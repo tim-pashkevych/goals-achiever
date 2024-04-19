@@ -13,4 +13,4 @@ export const usersRouter = express.Router();
 usersRouter.post('/users/register', validateBody(signupUserSchema), usersControllers.register);
 usersRouter.post('/users/login', validateBody(loginUserSchema), loginUser);
 usersRouter.post('/users/logout', auth, logoutUser);
-usersRouter.patch('/users/avatar', upload.single('avatar'), usersControllers.updateAvatar);
+usersRouter.patch('/users/avatar', auth, upload.single('avatar'), usersControllers.updateAvatar);

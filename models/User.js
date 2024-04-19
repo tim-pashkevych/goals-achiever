@@ -18,6 +18,7 @@ const userSchema = new Schema(
     },
     avatarURL: {
       type: String,
+      default: 'https://www.w3schools.com/howto/img_avatar.png',
     },
     theme: {
       type: String,
