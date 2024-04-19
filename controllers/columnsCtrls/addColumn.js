@@ -1,7 +1,8 @@
 import { columnsServices } from '../../services/index.js';
 
 export const addColumn = async (req, res, next) => {
-  const newColumn = await columnsServices.addColumn(req.body);
+  const { _id: owner } = req.user;
+  const newColumn = await columnsServices.addColumn({ ...req.body, owner });
 
   res.status(201).json({
     result: newColumn,
