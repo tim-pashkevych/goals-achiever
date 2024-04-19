@@ -9,10 +9,13 @@ cloudinary.config({
   api_secret: CLOUNDINARY_API_SECRET,
 });
 
-export const uploadImage = async (publicId, imagePath) => {
+export const uploadImage = async (imagePath, folder = '', publicId = '') => {
   const options = {
-    public_id: 'avatar',
-    folder: `${CLOUNDINARY_ASSETS_FOLDER}/${publicId}/`,
+    public_id: publicId,
+    secure: true,
+    overwrite: true,
+    invalidation: true,
+    folder: `${CLOUNDINARY_ASSETS_FOLDER}/${folder}`,
   };
 
   return await cloudinary.uploader.upload(imagePath, options);
