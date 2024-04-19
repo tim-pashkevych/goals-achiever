@@ -5,7 +5,12 @@ import { loginUserSchema } from '../../schemas/index.js';
 import { loginUser, logoutUser } from '../../controllers/index.js';
 import { auth } from '../../middlewares/index.js';
 
+import { signupUserSchema } from '../../schemas/users/index.js';
+import { usersControllers } from '../../controllers/usersControllers/index.js';
+
 const usersRouter = express.Router();
+
+usersRouter.post('/register', validateBody(signupUserSchema), usersControllers.register);
 
 usersRouter.post('/login', validateBody(loginUserSchema), loginUser);
 

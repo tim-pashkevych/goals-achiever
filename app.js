@@ -22,9 +22,7 @@ app.use('/', docsRouter);
 app.use('/api/boards', boardsRouter);
 app.use('/api/boards/:boardId/columns', columnsRouter);
 app.use('/api/boards/:boardId/columns/:columnId/cards', cardsRouter);
-
 app.use('/api/users', usersRouter);
-
 app.use('/api/issues', issuesRouter);
 
 app.use((_, res) => {
