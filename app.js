@@ -4,6 +4,7 @@ import cors from 'cors';
 import 'dotenv/config';
 
 import { routerV1 } from './routes/index.js';
+import { docsRouter } from './routes/index.js';
 
 const { FRONTEND_URL = '*' } = process.env;
 
@@ -18,6 +19,7 @@ app.use(morgan('tiny'));
 app.use(express.json());
 app.use(cors(corsOptions));
 
+app.use('/', docsRouter);
 app.use('/api/v1', routerV1);
 
 app.use((_, res) => {
