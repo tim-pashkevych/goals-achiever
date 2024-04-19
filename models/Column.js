@@ -7,11 +7,11 @@ const columnsSchema = new Schema(
       required: [true, 'title is required'],
     },
     cards: [{ type: Schema.Types.ObjectId, ref: 'card' }],
-    boardId: [{ type: Schema.Types.ObjectId, ref: 'board' }],
+    boardId: { type: Schema.Types.ObjectId, ref: 'board' },
     owner: {
       type: Schema.Types.ObjectId,
       ref: 'user',
-      // required: true,
+      required: true,
     },
   },
   {

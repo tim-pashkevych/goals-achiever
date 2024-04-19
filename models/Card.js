@@ -23,6 +23,7 @@ const cardSchema = new Schema(
     },
     boardId: { type: Schema.Types.ObjectId, ref: 'board', required: true },
     columnId: { type: Schema.Types.ObjectId, ref: 'column', required: true },
+    owner: { type: Schema.Types.ObjectId, ref: 'column', required: true },
   },
   { versionKey: false, timestamps: true }
 );
