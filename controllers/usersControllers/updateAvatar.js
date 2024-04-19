@@ -10,7 +10,7 @@ export const updateAvatar = async (req, res) => {
   const cloudinaryPublicId = await usersServices.uploadAvatar(userId, path);
   await fs.rm(path);
 
-  const avatarURL = await cloudinaryServices.transformImage(cloudinaryPublicId);
+  const avatarURL = await cloudinaryServices.transformImage(cloudinaryPublicId, { width: 68, height: 68, crop: 'fill' });
 
   const user = await usersServices.updateUser({ _id: userId }, { avatarURL, cloudinaryPublicId });
 
