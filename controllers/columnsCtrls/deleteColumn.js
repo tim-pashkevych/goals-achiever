@@ -4,7 +4,9 @@ import HttpError from '../../helpers/HttpError.js';
 export const deleteColumn = async (req, res, next) => {
   const { id } = req.params;
 
-  const result = await columnsServices.removeColumn({ _id: id });
+  const { boardId } = req.body;
+
+  const result = await columnsServices.removeColumn({ _id: id }, boardId);
 
   if (!result) {
     throw HttpError(404, 'Column not found');
