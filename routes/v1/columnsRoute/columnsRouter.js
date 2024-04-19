@@ -7,6 +7,8 @@ import { auth, authBoard } from '../../../middlewares/index.js';
 
 export const columnsRouter = Router();
 
-columnsRouter.post('/columns/', auth, authBoard, validateBody(columnAddSchema), columnsCtrls.addColumn);
-columnsRouter.patch('/columns/:id', auth, authBoard, validateBody(columnUpdateSchema), columnsCtrls.updateColumn);
-columnsRouter.delete('/columns/:id', auth, authBoard, columnsCtrls.deleteColumn);
+
+columnsRouter.post('/columns/', auth, validateBody(columnAddSchema), columnsCtrls.addColumn);
+columnsRouter.patch('/columns/:id', auth, validateBody(columnUpdateSchema), columnsCtrls.updateColumn);
+columnsRouter.delete('/columns/:id', auth, columnsCtrls.deleteColumn);
+
