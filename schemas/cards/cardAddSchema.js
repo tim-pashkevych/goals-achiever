@@ -9,4 +9,6 @@ export const cardAddSchema = Joi.object({
     .valid(...priority)
     .required(),
   deadline: Joi.string().required(),
+  columnId: Joi.string().required(),
+  boardId: Joi.string().required(),
 });

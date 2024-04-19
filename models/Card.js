@@ -2,7 +2,7 @@ import { Schema, model } from 'mongoose';
 
 import { priority } from '../constants/index.js';
 
-const cardShema = new Schema(
+const cardSchema = new Schema(
   {
     title: {
       type: String,
@@ -21,8 +21,11 @@ const cardShema = new Schema(
       type: String,
       required: [true, 'deadline is required'],
     },
+    boardId: { type: Schema.Types.ObjectId, ref: 'board', required: true },
+    columnId: { type: Schema.Types.ObjectId, ref: 'column', required: true },
+    owner: { type: Schema.Types.ObjectId, ref: 'column', required: true },
   },
   { versionKey: false, timestamps: true }
 );
 
-export const Card = model('card', cardShema);
+export const Card = model('card', cardSchema);
