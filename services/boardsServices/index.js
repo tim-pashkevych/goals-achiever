@@ -1,3 +1,4 @@
+import { getBoards } from './getBoards.js';
 import { getBoardById } from './getBoardById.js';
 import { addBoard } from './addBoard.js';
 import { removeBoard } from './removeBoard.js';
@@ -8,4 +9,5 @@ export const boardsServices = {
   addBoard,
   removeBoard,
   updateBoard,
+  getBoards,
 };
