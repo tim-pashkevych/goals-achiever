@@ -2,36 +2,32 @@
   "compilerOptions": {
     "target": "ES2020",
     "lib": ["ES2020"],
-    "module": "ESNext",
-
-    // "baseUrl": "./",
-    // "paths": {
-    //   "@/*": ["./*"]
-    // },
+    "module": "ES2020",
 
     /* TypeScript Compilation */
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
+    "moduleResolution": "node",
+    "isolatedModules": true, //When set to true, this option ensures that each file is compiled in isolation, without the entire project context. This can help catch certain types of errors early in development, as it prevents accidental cross-file dependencies. It enforces that each file must be able to compile on its own, without relying on declarations or implementations in other files.
+    "resolveJsonModule": true, //Allows TypeScript to import JSON files directly into your code as if they were TypeScript modules
     //"noEmit": true, //It specifies whether TypeScript should be compiled into JavaScript when you run the project. 'true' means to NOT compile
     //"allowImportingTsExtensions": true, //Allows to import files with .ts and .tsx extension
-    "typeRoots": ["node_modules/@types", "./@types"],
-    "outDir": "./dist",
-    "allowSyntheticDefaultImports": true, //https://www.typescriptlang.org/tsconfig#allowSyntheticDefaultImports
+    "typeRoots": ["node_modules/@types", "./@types"], //Specifies the locations where the compiler should look for type definitions (*.d.ts files).
+    "outDir": "./dist", //Specifies the directory where TypeScript compiler (tsc) should emit compiled JavaScript files (.js) along with any other compiled output (like source maps).
+    "allowSyntheticDefaultImports": true, // https://www.typescriptlang.org/tsconfig#allowSyntheticDefaultImports
     "allowJs": true, // Allow JavaScript files to be a part of your program.
-    "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
-    // "skipLibCheck": true, //Skips checking types for installed libraries in example.d.ts files in @types folder
+    "forceConsistentCasingInFileNames": true, // Ensure that casing is correct in imports. Like not exPress, but express
+    // "skipLibCheck": true, //Skips checking types in (*.d.ts) files in @types folder
     "esModuleInterop": true, //Provides compatibility between CommonJS and ES modules.
-    "sourceMap": true,
+    "sourceMap": true, //This option instructs the TypeScript compiler (tsc) to generate source map files (.map files) during the compilation process. Source maps are files that map the compiled JavaScript code back to the original TypeScript code.
 
     /* Linting */
     "strict": true, //Turns on strict TypeScript types checks
     "noUnusedLocals": true, //Detects unused local variables and shows error
     "noUnusedParameters": true, //Detects unused function parameters and shows error
     "noFallthroughCasesInSwitch": true, //Detects possible falls in switch case constructions
-    "strictNullChecks": true
+    "strictNullChecks": true //When set to "true" TypeScript will ensure that variables are not accessed if there's a possibility they could be null or undefined. This helps catch errors early in the development process, preventing common bugs associated with null or undefined values, such as null pointer exceptions.
   },
-  "include": ["./"]
+  "include": ["./"], //This option specifies an array of file paths or glob patterns that should be included in the TypeScript compilation process. TypeScript will only compile files that match these patterns.
+  "exclude": ["node_modules", "dist"] //This option specifies an array of file paths or glob patterns that should be excluded from the TypeScript compilation process. TypeScript will ignore files that match these patterns, even if they are included through the include option.
 }
 
 //You can see the full documentation on https://www.typescriptlang.org/tsconfig
