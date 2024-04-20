@@ -7,6 +7,8 @@ export const cardUpdateSchema = Joi.object({
   description: Joi.string(),
   priority: Joi.string().valid(...priority),
   deadline: Joi.string(),
+  columnId: Joi.string().required(),
+  boardId: Joi.string().required(),
 })
-  .min(1)
-  .rule({ message: 'Body must have at least one field' });
+  .min(3)
+  .rule({ message: 'Body must have at least one changed field' });
