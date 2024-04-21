@@ -13,7 +13,7 @@ const loginUser = async (req: Request, res: Response) => {
   } catch (error) {
     if (error instanceof CustomError && error.status) {
       return res.status(error.status).json({ message: error.message });
-    } else if (error) {
+    } else {
       return res.status(500).json({ message: error instanceof Error ? error.message : 'Something went wrong during login process' });
     }
   }
@@ -27,7 +27,7 @@ const logoutUser = async (req: Request, res: Response) => {
   } catch (error) {
     if (error instanceof CustomError && error.status) {
       return res.status(error.status).json({ message: error.message });
-    } else if (error) {
+    } else {
       return res.status(500).json({ message: error instanceof Error ? error.message : 'Something went wrong during logout process' });
     }
   }

@@ -4,28 +4,26 @@
     "target": "ES2020",
 
     /* TypeScript Compilation */
-    "moduleResolution": "NodeNext",
-    "resolveJsonModule": true,
     "isolatedModules": true,
     "sourceMap": true,
     "typeRoots": ["node_modules/@types", "./@types"],
     "outDir": "./dist",
     "allowJs": true, // Allow JavaScript files to be a part of your program.
-    "esModuleInterop": true, //Provides compatibility between CommonJS and ES modules.
+    "checkJs": true, //When checkJs is enabled then errors are reported in JavaScript files.
     //"skipLibCheck": true, //Skips checking types for installed libraries in example.d.ts files in @types folder
-    //"noEmit": true, //It specifies whether TypeScript should be compiled into JavaScript when you run the project. 'true' means to NOT compile
-    //"allowImportingTsExtensions": true, //Allows to import files with .ts and .tsx extension
 
-    /* Linting */
+    /* Type Checking */
     "strict": true, //Turns on strict TypeScript types checks
     "noUnusedLocals": true, //Detects unused local variables and shows error
     "noUnusedParameters": true, //Detects unused function parameters and shows error
     "noFallthroughCasesInSwitch": true, //Detects possible falls in switch case constructions
-    "strictNullChecks": true,
+    "exactOptionalPropertyTypes": true, //Let's say there is a type: type colorThemeOverride = 'dark' | 'light';
+    //Without this flag enabled, there are three values which you can set colorThemeOverride to be: 'dark', 'light' and undefined
+    "noImplicitReturns": true, //When enabled, TypeScript will check all code paths in a function to ensure they return a value.
     "forceConsistentCasingInFileNames": true, //Ensure that casing is correct in imports.
-    "allowSyntheticDefaultImports": true // https://www.typescriptlang.org/tsconfig#allowSyntheticDefaultImports
-  },
-  "include": ["./**/*"]
+    "allowSyntheticDefaultImports": true, // https://www.typescriptlang.org/tsconfig#allowSyntheticDefaultImports
+    "resolveJsonModule": true
+  }
 }
 
 //You can see the full documentation on https://www.typescriptlang.org/tsconfig

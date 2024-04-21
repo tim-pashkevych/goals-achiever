@@ -6,8 +6,7 @@
     "start": "npm run build && node ./dist/server.js",
     "build": "npm run clear && tsc",
     "clear": "rimraf ./dist",
-    "dev": "tsc-watch -p tsconfig.json --onSuccess \"npm run server\"",
-    "server": "node ./dist/server.js"
+    "dev": "npx tsc-watch --onSuccess \"node ./dist/server.js\""
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
