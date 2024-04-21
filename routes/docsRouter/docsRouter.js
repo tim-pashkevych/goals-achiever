@@ -9,5 +9,5 @@ const swaggerDocument = require('../../swagger.json');
 
 export const docsRouter = express.Router();
 
-docsRouter.use('/api-docs', swaggerUi.serve);
-docsRouter.get('/api-docs', swaggerUi.setup(swaggerDocument));
+docsRouter.use('/', swaggerUi.serve);
+docsRouter.get('/', swaggerUi.setup(swaggerDocument));
