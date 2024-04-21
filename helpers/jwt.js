@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-import { CustomError } from '../helpers/index.js';
+import HttpError from '../helpers/HttpError.js';
 
 const { JWT_SECRET } = process.env;
 
@@ -16,8 +16,7 @@ export const verifyToken = token => {
     const data = jwt.verify(token, JWT_SECRET);
     return data;
   } catch (error) {
-    const authorizationError = new CustomError(401, 'Not authorized');
-    throw authorizationError;
+    throw HttpError(401, 'Not authorized');
   }
 };
 

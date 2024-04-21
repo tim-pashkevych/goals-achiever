@@ -15,7 +15,7 @@ const boardSchema = new Schema(
     },
     icon: {
       type: String,
-      required: [true, 'Background is required'],
+      required: [true, 'Icon is required'],
     },
     backgroundImageUrl: {
       type: String,
