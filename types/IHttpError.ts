@@ -1,4 +1,4 @@
-import { HttpErrorStatusCode } from './HttpErrorStatusCode';
+import { HttpErrorStatusCode } from './HttpErrorStatusCode.js';
 
 export interface IHttpError {
   status: HttpErrorStatusCode;

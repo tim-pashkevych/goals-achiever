@@ -1,37 +1,31 @@
 {
   "compilerOptions": {
+    "module": "NodeNext",
     "target": "ES2020",
-    "lib": ["ES2020"],
-    "module": "ESNext",
-
-    // "baseUrl": "./",
-    // "paths": {
-    //   "@/*": ["./*"]
-    // },
 
     /* TypeScript Compilation */
-    "moduleResolution": "bundler",
+    "moduleResolution": "NodeNext",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    //"noEmit": true, //It specifies whether TypeScript should be compiled into JavaScript when you run the project. 'true' means to NOT compile
-    //"allowImportingTsExtensions": true, //Allows to import files with .ts and .tsx extension
+    "sourceMap": true,
     "typeRoots": ["node_modules/@types", "./@types"],
     "outDir": "./dist",
-    "allowSyntheticDefaultImports": true, //https://www.typescriptlang.org/tsconfig#allowSyntheticDefaultImports
     "allowJs": true, // Allow JavaScript files to be a part of your program.
-    "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
-    // "skipLibCheck": true, //Skips checking types for installed libraries in example.d.ts files in @types folder
     "esModuleInterop": true, //Provides compatibility between CommonJS and ES modules.
-    "sourceMap": true,
+    //"skipLibCheck": true, //Skips checking types for installed libraries in example.d.ts files in @types folder
+    //"noEmit": true, //It specifies whether TypeScript should be compiled into JavaScript when you run the project. 'true' means to NOT compile
+    //"allowImportingTsExtensions": true, //Allows to import files with .ts and .tsx extension
 
     /* Linting */
     "strict": true, //Turns on strict TypeScript types checks
     "noUnusedLocals": true, //Detects unused local variables and shows error
     "noUnusedParameters": true, //Detects unused function parameters and shows error
     "noFallthroughCasesInSwitch": true, //Detects possible falls in switch case constructions
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "forceConsistentCasingInFileNames": true, //Ensure that casing is correct in imports.
+    "allowSyntheticDefaultImports": true // https://www.typescriptlang.org/tsconfig#allowSyntheticDefaultImports
   },
-  "include": ["./"]
+  "include": ["./**/*"]
 }
 
 //You can see the full documentation on https://www.typescriptlang.org/tsconfig
