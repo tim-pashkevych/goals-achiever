@@ -5,7 +5,7 @@ const issueSchema = new Schema(
     owner: {
       type: Schema.Types.ObjectId,
       ref: 'user',
-      // required: true,
+      required: true,
     },
     email: {
       type: String,
