@@ -1069,7 +1069,7 @@
             "$ref": "#/components/schemas/BoardRequest"
           },
           {
-            "required": ["title", "icon", "backgroundImageUrl"]
+            "required": ["title", "icon", "backgroundImage"]
           }
         ]
       },
@@ -1406,14 +1406,13 @@
               },
               "icon": {
                 "type": "string",
-                "example": "Need to add an example (?)",
-                "description": "Board's icon"
+                "example": "star",
+                "description": "Board's icon Id"
               },
-              "backgroundImageUrl": {
+              "backgroundImage": {
                 "type": "string",
-                "format": "URL",
-                "example": "https://res.cloudinary.com/dskzfituz/image/upload/c_fill,h_68,w_68/v1/taskpro-local/users/66213450e6850f2cdd428337/avatar/k8bkkaztycx0keyzvu0u?_a=BAMABmP80",
-                "description": "Board's background image URL"
+                "example": "red-moon",
+                "description": "Board's background image Id"
               },
               "_id": {
                 "type": "string",
@@ -1450,10 +1449,10 @@
             "example": "Need to add example (?)",
             "description": "Need to add description (?)"
           },
-          "backgroundImageUrl": {
+          "backgroundImage": {
             "type": "string",
-            "example": "https://res.cloudinary.com/dskzfituz/image/upload/c_fill,h_68,w_68/v1/taskpro-local/users/66213450e6850f2cdd428337/avatar/k8bkkaztycx0keyzvu0u?_a=BAMABmP80",
-            "description": "Board's background image URL"
+            "example": "Board's background image Id",
+            "description": "Board's background image Id"
           }
         }
       },
