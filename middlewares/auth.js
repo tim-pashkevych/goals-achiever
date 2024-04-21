@@ -1,48 +1,49 @@
-import { jwt, CustomError } from '../helpers/index.js';
-import { User } from '../models/index.js';
-import { ctrlWrapper } from '../decorators/index.js';
+import jwt from 'jsonwebtoken';
 
-const auth = async (req, _, next) => {
+import HttpError from '../helpers/HttpError.js';
+import { usersServices } from '../services/index.js';
+
+const { JWT_SECRET } = process.env;
+
+const authenticate = async (req, _, next) => {
   const { authorization } = req.headers;
 
   if (!authorization) {
-    const authorizationError = new CustomError(401, "Authorization header wasn't found");
-    throw authorizationError;
+    return next(HttpError(401, 'Authorization header not found'));
   }
 
   const [bearer, token] = authorization.split(' ');
 
-  if (!(bearer === 'bearer' || bearer === 'Bearer')) {
-    const bearerError = new CustomError(401, 'Bearer is absent in the authorization header.');
-    throw bearerError;
+  if (bearer !== 'Bearer') {
+    return next(HttpError(401, 'Bearer not found'));
   }
 
   if (!token) {
-    const tokenError = new CustomError(401, 'Token is absent in the authorization header.');
-    throw tokenError;
+    return next(HttpError(401, 'Token is absent in the authorization header.'));
   }
 
-  const { id } = jwt.verifyToken(token);
+  try {
+    const { id } = jwt.verify(token, JWT_SECRET);
 
-  const user = await User.findById(id).select('name email avatarURL theme boards token');
+    const user = await usersServices.searchUser({ _id: id });
 
-  if (!user) {
-    const userError = new CustomError(401, 'User not found');
-    throw userError;
-  }
+    if (!user) {
+      return next(HttpError(401, 'Not authorized'));
+    }
 
-  if (!user.token) {
-    const userSignOutError = new CustomError(401, 'User already signout');
-    throw userSignOutError;
-  }
+    if (!user.token) {
+      return next(HttpError(401, 'Not authorized'));
+    }
 
-  if (user.token === token) {
+    if (user.token !== token) {
+      return next(HttpError(401, 'Not authorized'));
+    }
+
     req.user = user;
     next();
-  } else {
-    const notAuthorizedError = new CustomError(401, 'Not authorized');
-    throw notAuthorizedError;
+  } catch (error) {
+    next(HttpError(401, error.message));
   }
 };
 
-export default ctrlWrapper(auth);
+export default authenticate;

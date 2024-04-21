@@ -28,25 +28,8 @@ export const signIn = async user => {
     user: {
       name: loggedInUser.name,
       email: loggedInUser.email,
+      theme: loggedInUser.theme,
       avatarURL: loggedInUser.avatarURL,
     },
   };
-};
-
-export const signOut = async id => {
-  const user = await User.findById(id);
-
-  if (!user) {
-    const error = new Error('Not authorized');
-    error.status = 401;
-
-    throw error;
-  }
-
-  const result = await User.findByIdAndUpdate(id, { token: null }, { new: true });
-  if (result) {
-    return true;
-  } else {
-    return false;
-  }
 };
