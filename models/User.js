@@ -25,6 +25,7 @@ const userSchema = new Schema(
     theme: {
       type: String,
       enum: themes,
+      default: themes[1],
       required: [true, 'Theme is required'],
     },
     boards: [

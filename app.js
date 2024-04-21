@@ -21,6 +21,7 @@ app.use(cors(corsOptions));
 
 app.use('/', docsRouter);
 app.use('/api/v1', routerV1);
+// app.use('/api/theme', themeRoutes);
 
 app.use((_, res) => {
   res.status(404).json({ message: 'Route not found' });
