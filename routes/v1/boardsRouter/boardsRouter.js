@@ -7,6 +7,7 @@ import auth from '../../../middlewares/auth.js';
 
 export const boardsRouter = Router();
 
+boardsRouter.get('/boards/', auth, boardsCtrls.getBoards);
 boardsRouter.post('/boards/', auth, validateBody(boardAddSchema), boardsCtrls.addBoard);
 boardsRouter.get('/boards/:id', auth, boardsCtrls.getBoardById);
 boardsRouter.patch('/boards/:id', auth, validateBody(boardUpdateSchema), boardsCtrls.updateBoard);
