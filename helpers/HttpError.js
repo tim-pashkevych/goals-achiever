@@ -1,9 +1,12 @@
 const messageList = {
-  400: 'Bad Request',
-  401: 'Unauthorized',
-  403: 'Forbidden',
-  404: 'Not Found',
   409: 'Conflict',
+  200: 'OK. Successful',
+  400: 'Bad request. Invalid request parameters',
+  401: 'Authorization required',
+  403: 'Not allowed',
+  404: 'Not found',
+  420: 'Rate limited',
+  500: 'Internal error. Contact support',
 };
 
 const HttpError = (status, message = messageList[status]) => {
