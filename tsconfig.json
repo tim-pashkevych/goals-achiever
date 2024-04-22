@@ -11,6 +11,7 @@
     "allowJs": true, // Allow JavaScript files to be a part of your program.
     "checkJs": true, //When checkJs is enabled then errors are reported in JavaScript files.
     //"skipLibCheck": true, //Skips checking types for installed libraries in example.d.ts files in @types folder
+    "removeComments": true, //Removes all comments from TypeScript files when converting into JavaScript
 
     /* Type Checking */
     "strict": true, //Turns on strict TypeScript types checks
