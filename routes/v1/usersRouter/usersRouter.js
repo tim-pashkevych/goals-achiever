@@ -12,5 +12,5 @@ usersRouter.post('/users/register', validateBody(signupUserSchema), usersControl
 usersRouter.post('/users/login', validateBody(signinUserSchema), usersControllers.usersLogin);
 usersRouter.post('/users/logout', auth, usersControllers.usersLogout);
 usersRouter.get('/users', auth, usersControllers.getCurrentUser);
-usersRouter.patch('/users', auth, upload.single('avatar'), validateBody(updateUserInfoSchema), usersControllers.updateUserInfo);
+usersRouter.patch('/users/avatar', auth, upload.single('avatar'), validateBody(updateUserInfoSchema), usersControllers.updateUserInfo);
 usersRouter.patch('/users/theme', auth, validateBody(updateUserThemeSchema), usersControllers.updateUserTheme);
