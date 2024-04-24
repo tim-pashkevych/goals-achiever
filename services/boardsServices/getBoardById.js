@@ -8,7 +8,7 @@ export const getBoardById = async filter => {
       select: '_id title cards',
       populate: {
         path: 'cards',
-        select: '_id title description priority deadline',
+        select: '_id title description priority deadline columnId',
       },
     });
   return board;
