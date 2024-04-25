@@ -5,10 +5,10 @@ export const getBoardById = async filter => {
     .select('_id title icon  backgroundImage')
     .populate({
       path: 'columns',
-      select: '_id title cards',
+      select: '_id title cards createdAt',
       populate: {
         path: 'cards',
-        select: '_id title description priority deadline',
+        select: '_id columnId title description priority deadline createdAt',
       },
     });
   return board;
