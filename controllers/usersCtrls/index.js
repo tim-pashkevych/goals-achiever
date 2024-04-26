@@ -4,6 +4,7 @@ import { updateUserTheme } from './updateUserTheme.js';
 import { usersLogin } from './usersLogin.js';
 import { usersLogout } from './usersLogout.js';
 import { getCurrentUser } from './getCurrentUser.js';
+import { refreshToken } from './refreshToken.js';
 
 import ctrlWrapper from '../../decorators/ctrlWrapper.js';
 
@@ -14,4 +15,5 @@ export const usersControllers = {
   usersLogin: ctrlWrapper(usersLogin),
   usersLogout: ctrlWrapper(usersLogout),
   getCurrentUser: ctrlWrapper(getCurrentUser),
+  refreshToken: ctrlWrapper(refreshToken),
 };

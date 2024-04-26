@@ -4,9 +4,9 @@ import HttpError from '../helpers/HttpError.js';
 
 const { JWT_SECRET } = process.env;
 
-export const generateToken = id => {
+export const generateToken = (id, timeInHours = 1) => {
   const payload = { id };
-  const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '12h' });
+  const token = jwt.sign(payload, JWT_SECRET, { expiresIn: `${timeInHours}h` });
 
   return token;
 };
