@@ -6,6 +6,7 @@ import { validatePassword } from './validatePassword.js';
 import { signIn } from './signIn.js';
 import { signOut } from './signOut.js';
 import { getCurrentUser } from './getCurrentUser.js';
+import { updateUserInfo } from './updateUserInfo.js';
 
 export const usersServices = {
   createUser: createUser,
@@ -16,4 +17,5 @@ export const usersServices = {
   signIn: signIn,
   signOut: signOut,
   getCurrentUser: getCurrentUser,
+  updateUserInfo: updateUserInfo,
 };

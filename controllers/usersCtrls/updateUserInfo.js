@@ -28,7 +28,7 @@ export const updateUserInfo = async (req, res) => {
     const avatarURL = await cloudinaryServices.transformImage(cloudinaryPublicId, { width: 68, height: 68, crop: 'fill' });
     body.avatarURL = avatarURL;
   }
-  const user = await usersServices.updateUser({ _id }, body);
+  const user = await usersServices.updateUserInfo({ _id }, body);
 
   res.json({
     result: user,
