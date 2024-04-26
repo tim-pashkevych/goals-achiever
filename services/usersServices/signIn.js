@@ -20,11 +20,13 @@ export const signIn = async user => {
   }
 
   const token = jwt.generateToken(dbUser._id);
+  const refreshToken = jwt.generateToken(dbUser._id, 720);
 
-  const loggedInUser = await User.findByIdAndUpdate(dbUser._id, { token }, { new: true });
+  const loggedInUser = await User.findByIdAndUpdate(dbUser._id, { token, refreshToken }, { new: true });
 
   return {
     token: loggedInUser.token,
+    refreshToken: loggedInUser.refreshToken,
     user: {
       name: loggedInUser.name,
       email: loggedInUser.email,
