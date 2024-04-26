@@ -11,7 +11,7 @@ export const signOut = async id => {
     throw error;
   }
 
-  const result = await User.findByIdAndUpdate(id, { token: null }, { new: true });
+  const result = await User.findByIdAndUpdate(id, { token: null, refreshToken: null }, { new: true });
   if (result) {
     return true;
   } else {
