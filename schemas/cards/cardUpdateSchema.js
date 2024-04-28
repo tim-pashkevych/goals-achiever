@@ -6,7 +6,7 @@ export const cardUpdateSchema = Joi.object({
   title: Joi.string(),
   description: Joi.string(),
   priority: Joi.string().valid(...priority),
-  deadline: Joi.string(),
+  deadline: Joi.number(),
   columnId: Joi.string().required(),
   boardId: Joi.string().required(),
 })

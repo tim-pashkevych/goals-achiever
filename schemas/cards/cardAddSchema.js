@@ -8,7 +8,7 @@ export const cardAddSchema = Joi.object({
   priority: Joi.string()
     .valid(...priority)
     .required(),
-  deadline: Joi.string().required(),
+  deadline: Joi.number().required(),
   columnId: Joi.string().required(),
   boardId: Joi.string().required(),
 });
