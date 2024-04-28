@@ -3,6 +3,7 @@ import { boardsServices } from '../../services/boardsServices/index.js';
 
 export const getCurrentUser = async (req, res) => {
   const { _id: userId } = req.user;
+  const { boardId } = req.query;
 
   const { boards: boardsData, ...user } = await usersServices.getCurrentUser({ _id: userId });
   if (!boardsData) {
@@ -11,7 +12,7 @@ export const getCurrentUser = async (req, res) => {
     });
   }
 
-  const board = boardsData[0];
+  const board = boardId ? boardsData.find(board => board._id.toString() === boardId) : boardsData[0];
   if (!board) {
     return res.json({
       result: { user, boards: [], columns: [], cards: [] },
