@@ -102,7 +102,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RegistrationRequest"
+                "$ref": "#/components/schemas/LoginRequest"
               }
             }
           }
@@ -183,10 +183,10 @@
         }
       }
     },
-    "/users/avatar": {
+    "/users": {
       "patch": {
         "tags": ["Users"],
-        "summary": "Update user's avatar",
+        "summary": "Update user's info",
         "security": [{ "Token": [] }],
         "requestBody": {
           "description": "User's new avatar file",
@@ -194,7 +194,7 @@
           "content": {
             "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateUserAvatarRequest"
+                "$ref": "#/components/schemas/UpdateUserInfoRequest"
               }
             }
           }
@@ -205,7 +205,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UpdateUserAvatarResponse"
+                  "$ref": "#/components/schemas/UpdateUserInfoResponse"
                 }
               }
             }
@@ -216,6 +216,172 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/AbsentAvatarError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized (invalid access token)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorizationError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Provided email already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailDublicateError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get current user info",
+        "security": [{ "Token": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrentUserResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized (invalid access token)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorizationError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/theme": {
+      "patch": {
+        "tags": ["Users"],
+        "summary": "Update UI colors theme",
+        "security": [{ "Token": [] }],
+        "requestBody": {
+          "description": "Object with new theme value",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateThemeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateThemeResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AbsentThemeError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized (invalid access token)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorizationError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/refresh": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Refresh user's session",
+        "requestBody": {
+          "description": "Object with the refresh token value",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefreshResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AbsentRefreshTokenError"
                 }
               }
             }
@@ -1008,7 +1174,26 @@
   "components": {
     "schemas": {
       "RegistrationRequest": {
-        "$ref": "#/components/schemas/UserRequest"
+        "type": "object",
+        "required": ["email", "password", "name"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "user@example.com",
+            "description": "User's email"
+          },
+          "password": {
+            "type": "string",
+            "example": "qwerty123",
+            "description": "User's password"
+          },
+          "name": {
+            "type": "string",
+            "example": "Mike",
+            "description": "User's name"
+          }
+        }
       },
       "RegistrationResponse": {
         "type": "object",
@@ -1029,34 +1214,199 @@
         "properties": {
           "token": {
             "type": "string",
+            "format": "token",
             "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-            "description": "Session's access token"
+            "description": "Access token"
+          },
+          "refreshToken": {
+            "type": "string",
+            "format": "token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+            "description": "Session refresh token"
           },
           "user": {
             "$ref": "#/components/schemas/User"
           }
         }
       },
-      "UpdateUserAvatarRequest": {
+      "GetCurrentUserResponse": {
         "type": "object",
-        "required": ["avatar"],
+        "properties": {}
+      },
+      "UpdateUserInfoRequest": {
+        "type": "object",
         "properties": {
           "avatar": {
             "type": "string",
-            "format": "binary"
+            "format": "binary",
+            "description": "User's new profile avatar"
+          },
+          "name": {
+            "type": "string",
+            "example": "John Wick",
+            "description": "User's new name"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "newUserEmail@example.com",
+            "description": "User's new email"
+          },
+          "password": {
+            "type": "string",
+            "example": "12345678",
+            "description": "User's new password"
           }
         }
       },
-      "UpdateUserAvatarResponse": {
+      "UpdateUserInfoResponse": {
         "type": "object",
         "properties": {
           "result": {
             "type": "object",
             "properties": {
+              "_id": {
+                "type": "string",
+                "format": "id",
+                "example": "66213450e6850f2cgnh28337",
+                "description": "User's Id"
+              },
+              "name": {
+                "type": "string",
+                "example": "John Wick",
+                "description": "User's name"
+              },
+              "email": {
+                "type": "string",
+                "format": "email",
+                "example": "newUserEmail@example.com",
+                "description": "User's email"
+              },
               "avatarURL": {
                 "type": "string",
                 "format": "URL",
                 "example": "https://res.cloudinary.com/dskzfituz/image/upload/c_fill,h_68,w_68/v1/taskpro-local/users/66213450e6850f2cdd428337/avatar/haln2vjxsonqeahc9cjx?_a=BAMABmP80"
+              }
+            }
+          }
+        }
+      },
+      "UpdateThemeRequest": {
+        "type": "object",
+        "required": ["theme"],
+        "properties": {
+          "theme": {
+            "type": "string",
+            "enum": ["dark", "light", "violet"],
+            "example": "dark",
+            "description": "UI colors theme"
+          }
+        }
+      },
+      "UpdateThemeResponse": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "type": "object",
+            "properties": {
+              "theme": {
+                "type": "string",
+                "enum": ["dark", "light", "violet"],
+                "example": "dark",
+                "description": "UI colors theme"
+              }
+            }
+          }
+        }
+      },
+      "RefreshRequest": {
+        "type": "object",
+        "required": ["refreshToken"],
+        "properties": {
+          "refreshToken": {
+            "type": "string",
+            "format": "token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+            "description": "Refresh token value"
+          }
+        }
+      },
+      "RefreshResponse": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "type": "object",
+            "properties": {
+              "token": {
+                "type": "string",
+                "format": "token",
+                "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+                "description": "New session token"
+              },
+              "refreshToken": {
+                "type": "string",
+                "format": "token",
+                "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+                "description": "New refresh token"
+              },
+              "user": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        }
+      },
+      "CurrentUserResponse": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "type": "object",
+            "properties": {
+              "user": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Mike",
+                    "description": "Current user name"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "user@example.com",
+                    "description": "Current user email"
+                  },
+                  "avatarURL": {
+                    "type": "string",
+                    "format": "URL",
+                    "example": "https://res.cloudinary.com/dskzfituz/image/upload/c_fill,h_68,w_68/v1/taskpro-local/users/66213450e6850f2cdd428337/avatar/k8bkkaztycx0keyzvu0u?_a=BAMABmP80",
+                    "description": "Current user profile avatar"
+                  },
+                  "theme": {
+                    "type": "string",
+                    "enum": ["dark", "light", "violet"],
+                    "example": "dark",
+                    "description": "Current user UI colors theme"
+                  }
+                }
+              },
+              "boards": {
+                "type": "array",
+                "items": { "type": "object" },
+                "example": [],
+                "description": "List of current user boards"
+              },
+              "columns": {
+                "type": "array",
+                "items": { "type": "object" },
+                "example": [],
+                "description": "List of the columns on the current user's active board"
+              },
+              "cards": {
+                "type": "array",
+                "items": { "type": "object" },
+                "example": [],
+                "description": "List of the cards on the current user's active board"
               }
             }
           }
@@ -1357,10 +1707,16 @@
             "example": "user@example.com",
             "description": "User's email"
           },
+          "theme": {
+            "type": "string",
+            "enum": ["light", "dark", "violet"],
+            "example": "dark",
+            "description": "UI colors theme"
+          },
           "avatarURL": {
             "type": "string",
             "example": "//www.gravatar.com/avatar/cc06f09cd70054783dd4cbd6d88fb540?s=250&d=retro&f=y",
-            "description": "User's avatar URL"
+            "description": "Path to the user's avatar file in the URL format"
           }
         }
       },
@@ -1589,6 +1945,26 @@
           "message": {
             "type": "string",
             "example": "'avatar' is a required field"
+          }
+        }
+      },
+      "AbsentThemeError": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "'theme' is a required field",
+            "description": "Error message"
+          }
+        }
+      },
+      "AbsentRefreshTokenError": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "'refreshToken' is a required field",
+            "description": "Error message"
           }
         }
       },
