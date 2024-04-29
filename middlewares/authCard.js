@@ -6,7 +6,7 @@ const authCard = async (req, _, next) => {
   const card = await getCardById({ owner: req.user, _id: req.params.id });
 
   if (!card) {
-    next(HttpError(401, 'Not authorized: cardId is invalid'));
+    next(HttpError(400, 'Card Id is invalid'));
   } else {
     next();
   }

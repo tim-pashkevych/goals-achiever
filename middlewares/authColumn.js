@@ -8,7 +8,7 @@ const authColumn = async (req, _, next) => {
   const column = await getColumnById({ owner: req.user, _id: columnId });
 
   if (!column) {
-    return next(HttpError(401, 'Not authorized: columnId is invalid'));
+    return next(HttpError(400, 'Column Id is invalid'));
   } else {
     next();
   }

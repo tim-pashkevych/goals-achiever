@@ -9,7 +9,7 @@ const authColumnAndBoard = async (req, _, next) => {
   const column = await getColumnById({ owner: req.user._id, _id: columnId, boardId });
 
   if (!column) {
-    return next(HttpError(401, 'Not authorized: combination of boardId and columnId is invalid'));
+    return next(HttpError(400, 'Combination of board Id and column Id is invalid'));
   } else {
     next();
   }

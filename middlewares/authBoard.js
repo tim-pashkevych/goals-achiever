@@ -8,7 +8,7 @@ const authBoard = async (req, _, next) => {
   const board = await getBoardById({ owner: req.user, _id: boardId });
 
   if (!board) {
-    next(HttpError(401, 'Not authorized: boardId is invalid'));
+    next(HttpError(400, 'Board Id is invalid'));
   } else {
     next();
   }
