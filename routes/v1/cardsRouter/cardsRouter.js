@@ -10,4 +10,4 @@ export const cardsRouter = express.Router({ mergeParams: true });
 cardsRouter.post('/cards', auth, authColumnAndBoard, validateBody(cardAddSchema), cardsCtrls.addCard);
 cardsRouter.patch('/cards/:id', auth, authColumnAndBoard, validateBody(cardUpdateSchema), cardsCtrls.updateCard);
 cardsRouter.patch('/cards/:id/move', auth, authColumnAndBoard, cardsCtrls.moveCard);
-cardsRouter.delete('/cards/:id', auth, authCard, cardsCtrls.deleteCard);
+cardsRouter.delete('/cards/:id', auth, cardsCtrls.deleteCard);
