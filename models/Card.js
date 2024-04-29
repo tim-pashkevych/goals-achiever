@@ -18,7 +18,7 @@ const cardSchema = new Schema(
       required: [true, 'priority is required'],
     },
     deadline: {
-      type: Date,
+      type: String,
       required: [true, 'deadline is required'],
     },
     boardId: { type: Schema.Types.ObjectId, ref: 'board', required: true },
