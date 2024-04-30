@@ -102,7 +102,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RegistrationRequest"
+                "$ref": "#/components/schemas/LoginRequest"
               }
             }
           }
@@ -183,10 +183,10 @@
         }
       }
     },
-    "/users/avatar": {
+    "/users": {
       "patch": {
         "tags": ["Users"],
-        "summary": "Update user's avatar",
+        "summary": "Update user's info",
         "security": [{ "Token": [] }],
         "requestBody": {
           "description": "User's new avatar file",
@@ -194,7 +194,7 @@
           "content": {
             "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateUserAvatarRequest"
+                "$ref": "#/components/schemas/UpdateUserInfoRequest"
               }
             }
           }
@@ -205,7 +205,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UpdateUserAvatarResponse"
+                  "$ref": "#/components/schemas/UpdateUserInfoResponse"
                 }
               }
             }
@@ -216,6 +216,172 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/AbsentAvatarError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized (invalid access token)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorizationError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Provided email already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailDublicateError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get current user info",
+        "security": [{ "Token": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrentUserResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized (invalid access token)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorizationError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/theme": {
+      "patch": {
+        "tags": ["Users"],
+        "summary": "Update UI colors theme",
+        "security": [{ "Token": [] }],
+        "requestBody": {
+          "description": "Object with new theme value",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateThemeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateThemeResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AbsentThemeError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized (invalid access token)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorizationError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/refresh": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Refresh user's session",
+        "requestBody": {
+          "description": "Object with the refresh token value",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefreshResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AbsentRefreshTokenError"
                 }
               }
             }
@@ -244,7 +410,7 @@
       }
     },
 
-    "/boards/": {
+    "/boards": {
       "post": {
         "tags": ["Boards"],
         "summary": "Create a new board",
@@ -302,6 +468,43 @@
             }
           }
         }
+      },
+      "get": {
+        "tags": ["Boards"],
+        "summary": "Get all boards of the current user",
+        "security": [{ "Token": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetBoardsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized (invalid access token)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorizationError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/boards/{id}": {
@@ -313,7 +516,7 @@
           {
             "in": "path",
             "name": "id",
-            "schema": { "type": "string" },
+            "schema": { "type": "string", "format": "id" },
             "required": true,
             "description": "Board id"
           }
@@ -369,7 +572,7 @@
           {
             "in": "path",
             "name": "id",
-            "schema": { "type": "string" },
+            "schema": { "type": "string", "format": "id" },
             "required": true,
             "description": "Board id"
           }
@@ -446,7 +649,7 @@
           {
             "in": "path",
             "name": "id",
-            "schema": { "type": "string" },
+            "schema": { "type": "string", "format": "id" },
             "required": true,
             "description": "Board id"
           }
@@ -489,7 +692,7 @@
       }
     },
 
-    "/columns/": {
+    "/columns": {
       "post": {
         "tags": ["Columns"],
         "summary": "Add a new column to the board using { boardId }",
@@ -556,7 +759,7 @@
           {
             "in": "path",
             "name": "id",
-            "schema": { "type": "string" },
+            "schema": { "type": "string", "format": "id" },
             "required": true,
             "description": "Column id"
           }
@@ -572,7 +775,7 @@
           }
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Successful operation",
             "content": {
               "application/json": {
@@ -744,7 +947,7 @@
           {
             "in": "path",
             "name": "cardId",
-            "schema": { "type": "string" },
+            "schema": { "type": "string", "format": "id" },
             "required": true,
             "description": "Card id"
           }
@@ -761,7 +964,7 @@
           }
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Successful operation",
             "content": {
               "application/json": {
@@ -821,7 +1024,7 @@
           {
             "in": "path",
             "name": "cardId",
-            "schema": { "type": "string" },
+            "schema": { "type": "string", "format": "id" },
             "required": true,
             "description": "Card id"
           }
@@ -872,13 +1075,13 @@
           {
             "in": "path",
             "name": "cardId",
-            "schema": { "type": "string" },
+            "schema": { "type": "string", "format": "id" },
             "required": true,
             "description": "Card id"
           }
         ],
         "requestBody": {
-          "description": "move card in othe collumn",
+          "description": "Object that contains an id of the column that the card is currently in and an id of the column that the card should be moved to",
           "required": true,
           "content": {
             "application/json": {
@@ -889,7 +1092,7 @@
           }
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Successful operation",
             "content": {
               "application/json": {
@@ -1008,7 +1211,26 @@
   "components": {
     "schemas": {
       "RegistrationRequest": {
-        "$ref": "#/components/schemas/UserRequest"
+        "type": "object",
+        "required": ["email", "password", "name"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "user@example.com",
+            "description": "User's email"
+          },
+          "password": {
+            "type": "string",
+            "example": "qwerty123",
+            "description": "User's password"
+          },
+          "name": {
+            "type": "string",
+            "example": "Mike",
+            "description": "User's name"
+          }
+        }
       },
       "RegistrationResponse": {
         "type": "object",
@@ -1029,34 +1251,199 @@
         "properties": {
           "token": {
             "type": "string",
+            "format": "token",
             "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-            "description": "Session's access token"
+            "description": "Access token"
+          },
+          "refreshToken": {
+            "type": "string",
+            "format": "token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+            "description": "Session refresh token"
           },
           "user": {
             "$ref": "#/components/schemas/User"
           }
         }
       },
-      "UpdateUserAvatarRequest": {
+      "GetCurrentUserResponse": {
         "type": "object",
-        "required": ["avatar"],
+        "properties": {}
+      },
+      "UpdateUserInfoRequest": {
+        "type": "object",
         "properties": {
           "avatar": {
             "type": "string",
-            "format": "binary"
+            "format": "binary",
+            "description": "User's new profile avatar"
+          },
+          "name": {
+            "type": "string",
+            "example": "John Wick",
+            "description": "User's new name"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "newUserEmail@example.com",
+            "description": "User's new email"
+          },
+          "password": {
+            "type": "string",
+            "example": "12345678",
+            "description": "User's new password"
           }
         }
       },
-      "UpdateUserAvatarResponse": {
+      "UpdateUserInfoResponse": {
         "type": "object",
         "properties": {
           "result": {
             "type": "object",
             "properties": {
+              "_id": {
+                "type": "string",
+                "format": "id",
+                "example": "66213450e6850f2cgnh28337",
+                "description": "User's Id"
+              },
+              "name": {
+                "type": "string",
+                "example": "John Wick",
+                "description": "User's name"
+              },
+              "email": {
+                "type": "string",
+                "format": "email",
+                "example": "newUserEmail@example.com",
+                "description": "User's email"
+              },
               "avatarURL": {
                 "type": "string",
                 "format": "URL",
                 "example": "https://res.cloudinary.com/dskzfituz/image/upload/c_fill,h_68,w_68/v1/taskpro-local/users/66213450e6850f2cdd428337/avatar/haln2vjxsonqeahc9cjx?_a=BAMABmP80"
+              }
+            }
+          }
+        }
+      },
+      "UpdateThemeRequest": {
+        "type": "object",
+        "required": ["theme"],
+        "properties": {
+          "theme": {
+            "type": "string",
+            "enum": ["dark", "light", "violet"],
+            "example": "dark",
+            "description": "UI colors theme"
+          }
+        }
+      },
+      "UpdateThemeResponse": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "type": "object",
+            "properties": {
+              "theme": {
+                "type": "string",
+                "enum": ["dark", "light", "violet"],
+                "example": "dark",
+                "description": "UI colors theme"
+              }
+            }
+          }
+        }
+      },
+      "RefreshRequest": {
+        "type": "object",
+        "required": ["refreshToken"],
+        "properties": {
+          "refreshToken": {
+            "type": "string",
+            "format": "token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+            "description": "Refresh token value"
+          }
+        }
+      },
+      "RefreshResponse": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "type": "object",
+            "properties": {
+              "token": {
+                "type": "string",
+                "format": "token",
+                "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+                "description": "New session token"
+              },
+              "refreshToken": {
+                "type": "string",
+                "format": "token",
+                "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+                "description": "New refresh token"
+              },
+              "user": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        }
+      },
+      "CurrentUserResponse": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "type": "object",
+            "properties": {
+              "user": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Mike",
+                    "description": "Current user name"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "user@example.com",
+                    "description": "Current user email"
+                  },
+                  "avatarURL": {
+                    "type": "string",
+                    "format": "URL",
+                    "example": "https://res.cloudinary.com/dskzfituz/image/upload/c_fill,h_68,w_68/v1/taskpro-local/users/66213450e6850f2cdd428337/avatar/k8bkkaztycx0keyzvu0u?_a=BAMABmP80",
+                    "description": "Current user profile avatar"
+                  },
+                  "theme": {
+                    "type": "string",
+                    "enum": ["dark", "light", "violet"],
+                    "example": "dark",
+                    "description": "Current user UI colors theme"
+                  }
+                }
+              },
+              "boards": {
+                "type": "array",
+                "items": { "type": "object" },
+                "example": [],
+                "description": "List of current user boards"
+              },
+              "columns": {
+                "type": "array",
+                "items": { "type": "object" },
+                "example": [],
+                "description": "List of the columns on the current user's active board"
+              },
+              "cards": {
+                "type": "array",
+                "items": { "type": "object" },
+                "example": [],
+                "description": "List of the cards on the current user's active board"
               }
             }
           }
@@ -1076,14 +1463,139 @@
       "CreateBoardResponse": {
         "$ref": "#/components/schemas/Board"
       },
+      "GetBoardsResponse": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Board" },
+            "example": [
+              {
+                "_id": "662fa449af9086a3d3fcccb3",
+                "owner": "662698cdc2d20df05cabd72a",
+                "columns": ["662ffd8ddfa45017c862db8b", "662ffde0dfa45017c862db97", "662ffdefdfa45017c862db9e"],
+                "title": "My new dashboard",
+                "icon": "puzzle-piece",
+                "backgroundImage": "image7",
+                "createdAt": "2024-04-29T13:44:41.291Z",
+                "updatedAt": "2024-04-29T20:07:11.695Z"
+              },
+              {
+                "_id": "662fad77af9086a3d3fccde0",
+                "owner": "662698cdc2d20df05cabd72a",
+                "columns": ["662fb603af9086a3d3fcce82"],
+                "title": "New board",
+                "icon": "project",
+                "backgroundImage": "image12",
+                "createdAt": "2024-04-29T14:23:51.395Z",
+                "updatedAt": "2024-04-29T15:29:26.229Z"
+              },
+              {
+                "_id": "662fe2994a45200b60057490",
+                "owner": "662698cdc2d20df05cabd72a",
+                "columns": ["662fe2a04a45200b60057497", "662fe2dc4a45200b600574a3"],
+                "title": "Hey board",
+                "icon": "loading",
+                "backgroundImage": "image4",
+                "createdAt": "2024-04-29T18:10:33.247Z",
+                "updatedAt": "2024-04-29T18:11:40.463Z"
+              }
+            ],
+            "description": "List of current user boards"
+          }
+        }
+      },
       "GetBoardResponse": {
-        "$ref": "#/components/schemas/Board"
+        "type": "object",
+        "properties": {
+          "result": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "format": "id",
+                "example": "8273bjfiwbe29233vv3",
+                "description": "Board's id"
+              },
+              "columns": {
+                "type": "array",
+                "items": { "type": "object" },
+                "example": [],
+                "description": "Board's column list"
+              },
+              "title": {
+                "type": "string",
+                "example": "Dream makers project",
+                "description": "Board's name"
+              },
+              "icon": {
+                "type": "string",
+                "example": "puzzle-piece",
+                "description": "Board's icon name"
+              },
+              "backgroundImage": {
+                "type": "string",
+                "example": "image7",
+                "description": "Board's background image name"
+              }
+            }
+          }
+        }
       },
       "UpdateBoardRequest": {
         "$ref": "#/components/schemas/BoardRequest"
       },
       "UpdateBoardResponse": {
-        "$ref": "#/components/schemas/Board"
+        "type": "object",
+        "properties": {
+          "result": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "format": "id",
+                "example": "8273bjfiwbe29233vv3",
+                "description": "Board's id"
+              },
+              "owner": {
+                "type": "string",
+                "format": "id",
+                "example": "662698cdc2d20df05cabd72a",
+                "description": "Board owner Id"
+              },
+              "columns": {
+                "$ref": "#/components/schemas/ColumnsListExample"
+              },
+              "title": {
+                "type": "string",
+                "example": "Dream makers project",
+                "description": "Board's name"
+              },
+              "icon": {
+                "type": "string",
+                "example": "puzzle-piece",
+                "description": "Board's icon name"
+              },
+              "backgroundImage": {
+                "type": "string",
+                "example": "image7",
+                "description": "Board's background image name"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "Date",
+                "example": "2024-04-29T13:44:41.291Z",
+                "description": "Date of board creation"
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "Date",
+                "example": "2024-04-29T13:44:41.291Z",
+                "description": "Date of last board update"
+              }
+            }
+          }
+        }
       },
 
       "AddCardRequest": {
@@ -1092,85 +1604,89 @@
         "properties": {
           "title": {
             "type": "string",
-            "description": "Card title",
-            "example": "title"
+            "example": "Make a cake",
+            "description": "Card title"
           },
           "description": {
             "type": "string",
-            "description": "Card description",
-            "example": "description"
+            "example": "I need to make a cake for Kate's birthday",
+            "description": "Card description"
           },
           "priority": {
             "type": "string",
-            "description": "Card priority",
-            "example": "low"
+            "enum": ["without", "low", "medium", "high"],
+            "example": "low",
+            "description": "Card priority"
           },
           "deadline": {
-            "type": "string",
-            "format": "date",
-            "example": "12.13.2024",
-            "description": "deadline date"
+            "type": "number",
+            "format": "UTS",
+            "example": "1714472680",
+            "description": "Deadline date in the UTS format"
           },
           "boardId": {
             "type": "string",
-            "description": "the board in which the task is created",
-            "example": "662220a95e39526f21e9d4c2"
+            "format": "id",
+            "example": "662220a95e39526f21e9d4c2",
+            "description": "Id of a board in which the task needs to be created"
           },
           "columnId": {
             "type": "string",
-            "description": "the column in which the task is created",
-            "example": "662220a95e39526f21e9d4c2"
+            "format": "id",
+            "example": "662220a95e39526f21e9f47d",
+            "description": "Id of a column in which the task needs to be created"
           }
         }
       },
       "AddCardResponse": {
         "type": "object",
-        "required": ["result"],
         "properties": {
           "result": {
             "type": "object",
-            "required": ["title", "description", "priority", "deadline", "_id", "createdAt", "updatedAt"],
             "properties": {
               "title": {
                 "type": "string",
-                "description": "Card title",
-                "example": "title"
+                "example": "Make a cake",
+                "description": "Card title"
               },
               "description": {
                 "type": "string",
-                "description": "Card description",
-                "example": "description"
+                "example": "I need to make a cake for Kate's birthday",
+                "description": "Card description"
               },
               "priority": {
                 "type": "string",
-                "description": "Card priority",
-                "example": "low"
+                "enum": ["without", "low", "medium", "high"],
+                "example": "low",
+                "description": "Card priority"
               },
               "deadline": {
-                "type": "string",
-                "format": "date",
-                "description": "deadline date",
-                "example": "12.13.2024"
-              },
-              "_id": {
-                "type": "string",
-                "description": "Card id",
-                "example": "662112f285746b0dae1375c0"
+                "type": "number",
+                "format": "UTS",
+                "example": "1714472680",
+                "description": "Deadline date in the UTS format"
               },
               "boardId": {
                 "type": "string",
-                "description": "the board in which the task is created",
-                "example": "662220a95e39526f21e9d4c2"
+                "format": "id",
+                "example": "662220a95e39526f21e9d4c2",
+                "description": "Id of a board in which the task needs to be created"
               },
               "columnId": {
                 "type": "string",
-                "description": "the column in which the task is created",
-                "example": "662220a95e39526f21e9d4c2"
+                "format": "id",
+                "example": "662220a95e39526f21e9f47d",
+                "description": "Id of a column in which the task needs to be created"
               },
               "owner": {
                 "type": "string",
                 "description": "authorized user",
                 "example": "662220a95e39526f21e9d4c2"
+              },
+              "_id": {
+                "type": "string",
+                "description": "Card id",
+                "example": "662112f285746b0dae1375c0"
               },
               "createdAt": {
                 "type": "string",
@@ -1190,63 +1706,77 @@
       },
       "PatchCardRequest": {
         "type": "object",
+        "required": ["columnId", "boardId"],
         "properties": {
           "title": {
             "type": "string",
-            "description": "Card title",
-            "example": "title"
+            "example": "Create shopping list",
+            "description": "Card title"
           },
           "description": {
             "type": "string",
-            "description": "Card description",
-            "example": "description"
+            "example": "We are running out of some products. I need to make a list, so that we could buy them",
+            "description": "Card description"
           },
           "priority": {
             "type": "string",
-            "description": "Card priority",
-            "example": "low"
+            "enum": ["without", "low", "medium", "high"],
+            "example": "medium",
+            "description": "Card priority"
           },
           "deadline": {
+            "type": "number",
+            "format": "UTS",
+            "example": "1714472680",
+            "description": "Deadline date in the UTS format"
+          },
+          "boardId": {
             "type": "string",
-            "format": "date",
-            "description": "deadline date",
-            "example": "12.13.2024"
+            "format": "id",
+            "example": "662220a95e39526f21e9d4c2",
+            "description": "Id of a board in which the task is placed"
+          },
+          "columnId": {
+            "type": "string",
+            "format": "id",
+            "example": "662220a95e39526f21e9f47d",
+            "description": "Id of a column in which the task is placed"
           }
         }
       },
       "PatchCardResponse": {
         "type": "object",
-        "required": ["result"],
         "properties": {
           "result": {
             "type": "object",
-            "required": ["title", "description", "priority", "deadline"],
             "properties": {
+              "_id": {
+                "type": "string",
+                "format": "id",
+                "example": "6630d0082dc83a3d6539af18",
+                "description": "Card Id"
+              },
               "title": {
                 "type": "string",
-                "description": "Card title",
-                "example": "title"
+                "example": "Create shopping list",
+                "description": "Card title"
               },
               "description": {
                 "type": "string",
-                "description": "Card description",
-                "example": "description"
+                "example": "We are running out of some products. I need to make a list, so that we could buy them",
+                "description": "Card description"
               },
               "priority": {
                 "type": "string",
-                "description": "Card priority",
-                "example": "low"
+                "enum": ["without", "low", "medium", "high"],
+                "example": "medium",
+                "description": "Card priority"
               },
               "deadline": {
-                "type": "string",
-                "format": "date",
-                "description": "deadline date",
-                "example": "12.13.2024"
-              },
-              "_id": {
-                "type": "string",
-                "description": "Card id",
-                "example": "662112f285746b0dae1375c0"
+                "type": "number",
+                "format": "UTS",
+                "example": "1714472680",
+                "description": "Deadline date in the UTS format"
               }
             }
           }
@@ -1254,37 +1784,39 @@
       },
       "MoveCardRequest": {
         "type": "object",
-        "required": ["boardId", "columnId"],
+        "required": ["newColumnId", "columnId"],
         "properties": {
-          "boardId": {
-            "type": "string",
-            "description": "the board in which the task is created",
-            "example": "662220a95e39526f21e9d4c2"
-          },
           "columnId": {
             "type": "string",
-            "description": "the column in which the task is created",
-            "example": "662220a95e39526f21e9d4c2"
+            "format": "id",
+            "example": "662220a95e39526f21e9d4c2",
+            "description": "Id of a column in which the task currently is"
+          },
+          "newColumnId": {
+            "type": "string",
+            "format": "id",
+            "example": "662220a95e39526f21e9f6h4",
+            "description": "Id of a column in which the task should be moved to"
           }
         }
       },
       "MoveCardResponse": {
         "type": "object",
-        "required": ["result"],
         "properties": {
           "result": {
             "type": "object",
-            "required": ["_id", "columnId"],
             "properties": {
               "_id": {
                 "type": "string",
-                "description": "Card id",
-                "example": "662112f285746b0dae1375c0"
+                "format": "id",
+                "example": "662112f285746b0dae1375c0",
+                "description": "Card id"
               },
               "columnId": {
                 "type": "string",
-                "description": "the column in which the task was moved",
-                "example": "662220a95e39526f21e9d4c2"
+                "format": "id",
+                "example": "662220a95e39526f21e9d4c2",
+                "description": "Id of a column in which the task has been moved to"
               }
             }
           }
@@ -1357,10 +1889,16 @@
             "example": "user@example.com",
             "description": "User's email"
           },
+          "theme": {
+            "type": "string",
+            "enum": ["light", "dark", "violet"],
+            "example": "dark",
+            "description": "UI colors theme"
+          },
           "avatarURL": {
             "type": "string",
             "example": "//www.gravatar.com/avatar/cc06f09cd70054783dd4cbd6d88fb540?s=250&d=retro&f=y",
-            "description": "User's avatar URL"
+            "description": "Path to the user's avatar file in the URL format"
           }
         }
       },
@@ -1406,13 +1944,13 @@
               },
               "icon": {
                 "type": "string",
-                "example": "star",
-                "description": "Board's icon Id"
+                "example": "puzzle-piece",
+                "description": "Board's icon name"
               },
               "backgroundImage": {
                 "type": "string",
-                "example": "red-moon",
-                "description": "Board's background image Id"
+                "example": "image7",
+                "description": "Board's background image name"
               },
               "_id": {
                 "type": "string",
@@ -1446,13 +1984,13 @@
           },
           "icon": {
             "type": "string",
-            "example": "Need to add example (?)",
-            "description": "Need to add description (?)"
+            "example": "puzzle-piece",
+            "description": "Board's icon name"
           },
           "backgroundImage": {
             "type": "string",
-            "example": "Board's background image Id",
-            "description": "Board's background image Id"
+            "example": "image7",
+            "description": "Board's background image name"
           }
         }
       },
@@ -1512,6 +2050,7 @@
           },
           "boardId": {
             "type": "string",
+            "format": "id",
             "example": "1hf2ue37fhsbdf",
             "description": "_id of the board to add the column to"
           }
@@ -1524,7 +2063,7 @@
             "type": "string",
             "format": "id",
             "example": "283fhvue298hv02ev2",
-            "description": "Id of user who created the issue report"
+            "description": "Id of the user who created the issue report"
           },
           "email": {
             "type": "string",
@@ -1574,6 +2113,18 @@
         }
       },
 
+      "ColumnsListExample": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "format": "id",
+          "example": "662ffd8ddfa45017c862db8b",
+          "description": "Column Id"
+        },
+        "example": ["662ffd8ddfa45017c862db8b", "662ffde0dfa45017c862db97", "662ffdefdfa45017c862db9e"],
+        "description": "Columns list example"
+      },
+
       "UserBadRequestError": {
         "type": "object",
         "properties": {
@@ -1589,6 +2140,26 @@
           "message": {
             "type": "string",
             "example": "'avatar' is a required field"
+          }
+        }
+      },
+      "AbsentThemeError": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "'theme' is a required field",
+            "description": "Error message"
+          }
+        }
+      },
+      "AbsentRefreshTokenError": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "'refreshToken' is a required field",
+            "description": "Error message"
           }
         }
       },
