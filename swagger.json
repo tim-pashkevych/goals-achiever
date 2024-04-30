@@ -410,7 +410,7 @@
       }
     },
 
-    "/boards/": {
+    "/boards": {
       "post": {
         "tags": ["Boards"],
         "summary": "Create a new board",
@@ -443,6 +443,43 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/BoardBadRequestError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized (invalid access token)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorizationError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Boards"],
+        "summary": "Get all boards of the current user",
+        "security": [{ "Token": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetBoardsResponse"
                 }
               }
             }
@@ -1426,14 +1463,139 @@
       "CreateBoardResponse": {
         "$ref": "#/components/schemas/Board"
       },
+      "GetBoardsResponse": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Board" },
+            "example": [
+              {
+                "_id": "662fa449af9086a3d3fcccb3",
+                "owner": "662698cdc2d20df05cabd72a",
+                "columns": ["662ffd8ddfa45017c862db8b", "662ffde0dfa45017c862db97", "662ffdefdfa45017c862db9e"],
+                "title": "My new dashboard",
+                "icon": "puzzle-piece",
+                "backgroundImage": "image7",
+                "createdAt": "2024-04-29T13:44:41.291Z",
+                "updatedAt": "2024-04-29T20:07:11.695Z"
+              },
+              {
+                "_id": "662fad77af9086a3d3fccde0",
+                "owner": "662698cdc2d20df05cabd72a",
+                "columns": ["662fb603af9086a3d3fcce82"],
+                "title": "New board",
+                "icon": "project",
+                "backgroundImage": "image12",
+                "createdAt": "2024-04-29T14:23:51.395Z",
+                "updatedAt": "2024-04-29T15:29:26.229Z"
+              },
+              {
+                "_id": "662fe2994a45200b60057490",
+                "owner": "662698cdc2d20df05cabd72a",
+                "columns": ["662fe2a04a45200b60057497", "662fe2dc4a45200b600574a3"],
+                "title": "Hey board",
+                "icon": "loading",
+                "backgroundImage": "image4",
+                "createdAt": "2024-04-29T18:10:33.247Z",
+                "updatedAt": "2024-04-29T18:11:40.463Z"
+              }
+            ],
+            "description": "List of current user boards"
+          }
+        }
+      },
       "GetBoardResponse": {
-        "$ref": "#/components/schemas/Board"
+        "type": "object",
+        "properties": {
+          "result": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "format": "id",
+                "example": "8273bjfiwbe29233vv3",
+                "description": "Board's id"
+              },
+              "columns": {
+                "type": "array",
+                "items": { "type": "object" },
+                "example": [],
+                "description": "Board's column list"
+              },
+              "title": {
+                "type": "string",
+                "example": "Dream makers project",
+                "description": "Board's name"
+              },
+              "icon": {
+                "type": "string",
+                "example": "puzzle-piece",
+                "description": "Board's icon name"
+              },
+              "backgroundImage": {
+                "type": "string",
+                "example": "image7",
+                "description": "Board's background image name"
+              }
+            }
+          }
+        }
       },
       "UpdateBoardRequest": {
         "$ref": "#/components/schemas/BoardRequest"
       },
       "UpdateBoardResponse": {
-        "$ref": "#/components/schemas/Board"
+        "type": "object",
+        "properties": {
+          "result": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "format": "id",
+                "example": "8273bjfiwbe29233vv3",
+                "description": "Board's id"
+              },
+              "owner": {
+                "type": "string",
+                "format": "id",
+                "example": "662698cdc2d20df05cabd72a",
+                "description": "Board owner Id"
+              },
+              "columns": {
+                "$ref": "#/components/schemas/ColumnsListExample"
+              },
+              "title": {
+                "type": "string",
+                "example": "Dream makers project",
+                "description": "Board's name"
+              },
+              "icon": {
+                "type": "string",
+                "example": "puzzle-piece",
+                "description": "Board's icon name"
+              },
+              "backgroundImage": {
+                "type": "string",
+                "example": "image7",
+                "description": "Board's background image name"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "Date",
+                "example": "2024-04-29T13:44:41.291Z",
+                "description": "Date of board creation"
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "Date",
+                "example": "2024-04-29T13:44:41.291Z",
+                "description": "Date of last board update"
+              }
+            }
+          }
+        }
       },
 
       "AddCardRequest": {
@@ -1762,13 +1924,13 @@
               },
               "icon": {
                 "type": "string",
-                "example": "star",
-                "description": "Board's icon Id"
+                "example": "puzzle-piece",
+                "description": "Board's icon name"
               },
               "backgroundImage": {
                 "type": "string",
-                "example": "red-moon",
-                "description": "Board's background image Id"
+                "example": "image7",
+                "description": "Board's background image name"
               },
               "_id": {
                 "type": "string",
@@ -1802,13 +1964,13 @@
           },
           "icon": {
             "type": "string",
-            "example": "Need to add example (?)",
-            "description": "Need to add description (?)"
+            "example": "puzzle-piece",
+            "description": "Board's icon name"
           },
           "backgroundImage": {
             "type": "string",
-            "example": "Board's background image Id",
-            "description": "Board's background image Id"
+            "example": "image7",
+            "description": "Board's background image name"
           }
         }
       },
@@ -1928,6 +2090,18 @@
             "description": "Issue message"
           }
         }
+      },
+
+      "ColumnsListExample": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "format": "id",
+          "example": "662ffd8ddfa45017c862db8b",
+          "description": "Column Id"
+        },
+        "example": ["662ffd8ddfa45017c862db8b", "662ffde0dfa45017c862db97", "662ffdefdfa45017c862db9e"],
+        "description": "Columns list example"
       },
 
       "UserBadRequestError": {
