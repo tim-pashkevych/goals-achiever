@@ -692,7 +692,7 @@
       }
     },
 
-    "/columns/": {
+    "/columns": {
       "post": {
         "tags": ["Columns"],
         "summary": "Add a new column to the board using { boardId }",
