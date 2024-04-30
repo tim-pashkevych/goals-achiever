@@ -516,7 +516,7 @@
           {
             "in": "path",
             "name": "id",
-            "schema": { "type": "string" },
+            "schema": { "type": "string", "format": "id" },
             "required": true,
             "description": "Board id"
           }
@@ -572,7 +572,7 @@
           {
             "in": "path",
             "name": "id",
-            "schema": { "type": "string" },
+            "schema": { "type": "string", "format": "id" },
             "required": true,
             "description": "Board id"
           }
@@ -649,7 +649,7 @@
           {
             "in": "path",
             "name": "id",
-            "schema": { "type": "string" },
+            "schema": { "type": "string", "format": "id" },
             "required": true,
             "description": "Board id"
           }
@@ -759,7 +759,7 @@
           {
             "in": "path",
             "name": "id",
-            "schema": { "type": "string" },
+            "schema": { "type": "string", "format": "id" },
             "required": true,
             "description": "Column id"
           }
@@ -775,7 +775,7 @@
           }
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Successful operation",
             "content": {
               "application/json": {
@@ -947,7 +947,7 @@
           {
             "in": "path",
             "name": "cardId",
-            "schema": { "type": "string" },
+            "schema": { "type": "string", "format": "id" },
             "required": true,
             "description": "Card id"
           }
@@ -964,7 +964,7 @@
           }
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Successful operation",
             "content": {
               "application/json": {
@@ -1024,7 +1024,7 @@
           {
             "in": "path",
             "name": "cardId",
-            "schema": { "type": "string" },
+            "schema": { "type": "string", "format": "id" },
             "required": true,
             "description": "Card id"
           }
@@ -1075,13 +1075,13 @@
           {
             "in": "path",
             "name": "cardId",
-            "schema": { "type": "string" },
+            "schema": { "type": "string", "format": "id" },
             "required": true,
             "description": "Card id"
           }
         ],
         "requestBody": {
-          "description": "move card in othe collumn",
+          "description": "Object that contains an id of the column that the card is currently in and an id of the column that the card should be moved to",
           "required": true,
           "content": {
             "application/json": {
@@ -1092,7 +1092,7 @@
           }
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Successful operation",
             "content": {
               "application/json": {
@@ -1604,34 +1604,37 @@
         "properties": {
           "title": {
             "type": "string",
-            "description": "Card title",
-            "example": "title"
+            "example": "Make a cake",
+            "description": "Card title"
           },
           "description": {
             "type": "string",
-            "description": "Card description",
-            "example": "description"
+            "example": "I need to make a cake for Kate's birthday",
+            "description": "Card description"
           },
           "priority": {
             "type": "string",
-            "description": "Card priority",
-            "example": "low"
+            "enum": ["without", "low", "medium", "high"],
+            "example": "low",
+            "description": "Card priority"
           },
           "deadline": {
             "type": "string",
-            "format": "date",
-            "example": "12.13.2024",
-            "description": "deadline date"
+            "format": "UTS",
+            "example": "1714472680",
+            "description": "Deadline date"
           },
           "boardId": {
             "type": "string",
-            "description": "the board in which the task is created",
-            "example": "662220a95e39526f21e9d4c2"
+            "format": "id",
+            "example": "662220a95e39526f21e9d4c2",
+            "description": "Id of a board in which the task needs to be created"
           },
           "columnId": {
             "type": "string",
-            "description": "the column in which the task is created",
-            "example": "662220a95e39526f21e9d4c2"
+            "format": "id",
+            "example": "662220a95e39526f21e9f47d",
+            "description": "Id of a column in which the task needs to be created"
           }
         }
       },
@@ -1641,48 +1644,50 @@
         "properties": {
           "result": {
             "type": "object",
-            "required": ["title", "description", "priority", "deadline", "_id", "createdAt", "updatedAt"],
             "properties": {
               "title": {
                 "type": "string",
-                "description": "Card title",
-                "example": "title"
+                "example": "Make a cake",
+                "description": "Card title"
               },
               "description": {
                 "type": "string",
-                "description": "Card description",
-                "example": "description"
+                "example": "I need to make a cake for Kate's birthday",
+                "description": "Card description"
               },
               "priority": {
                 "type": "string",
-                "description": "Card priority",
-                "example": "low"
+                "enum": ["without", "low", "medium", "high"],
+                "example": "low",
+                "description": "Card priority"
               },
               "deadline": {
                 "type": "string",
-                "format": "date",
-                "description": "deadline date",
-                "example": "12.13.2024"
-              },
-              "_id": {
-                "type": "string",
-                "description": "Card id",
-                "example": "662112f285746b0dae1375c0"
+                "format": "UTS",
+                "example": "1714472680",
+                "description": "Deadline date"
               },
               "boardId": {
                 "type": "string",
-                "description": "the board in which the task is created",
-                "example": "662220a95e39526f21e9d4c2"
+                "format": "id",
+                "example": "662220a95e39526f21e9d4c2",
+                "description": "Id of a board in which the task needs to be created"
               },
               "columnId": {
                 "type": "string",
-                "description": "the column in which the task is created",
-                "example": "662220a95e39526f21e9d4c2"
+                "format": "id",
+                "example": "662220a95e39526f21e9f47d",
+                "description": "Id of a column in which the task needs to be created"
               },
               "owner": {
                 "type": "string",
                 "description": "authorized user",
                 "example": "662220a95e39526f21e9d4c2"
+              },
+              "_id": {
+                "type": "string",
+                "description": "Card id",
+                "example": "662112f285746b0dae1375c0"
               },
               "createdAt": {
                 "type": "string",
@@ -1702,63 +1707,77 @@
       },
       "PatchCardRequest": {
         "type": "object",
+        "required": ["columnId", "boardId"],
         "properties": {
           "title": {
             "type": "string",
-            "description": "Card title",
-            "example": "title"
+            "example": "Create shopping list",
+            "description": "Card title"
           },
           "description": {
             "type": "string",
-            "description": "Card description",
-            "example": "description"
+            "example": "We are running out of some products. I need to make a list, so that we could buy them",
+            "description": "Card description"
           },
           "priority": {
             "type": "string",
-            "description": "Card priority",
-            "example": "low"
+            "enum": ["without", "low", "medium", "high"],
+            "example": "medium",
+            "description": "Card priority"
           },
           "deadline": {
             "type": "string",
-            "format": "date",
-            "description": "deadline date",
-            "example": "12.13.2024"
+            "format": "UTS",
+            "example": "1714472680",
+            "description": "Deadline date"
+          },
+          "boardId": {
+            "type": "string",
+            "format": "id",
+            "example": "662220a95e39526f21e9d4c2",
+            "description": "Id of a board in which the task is placed"
+          },
+          "columnId": {
+            "type": "string",
+            "format": "id",
+            "example": "662220a95e39526f21e9f47d",
+            "description": "Id of a column in which the task is placed"
           }
         }
       },
       "PatchCardResponse": {
         "type": "object",
-        "required": ["result"],
         "properties": {
           "result": {
             "type": "object",
-            "required": ["title", "description", "priority", "deadline"],
             "properties": {
+              "_id": {
+                "type": "string",
+                "format": "id",
+                "example": "6630d0082dc83a3d6539af18",
+                "description": "Card Id"
+              },
               "title": {
                 "type": "string",
-                "description": "Card title",
-                "example": "title"
+                "example": "Create shopping list",
+                "description": "Card title"
               },
               "description": {
                 "type": "string",
-                "description": "Card description",
-                "example": "description"
+                "example": "We are running out of some products. I need to make a list, so that we could buy them",
+                "description": "Card description"
               },
               "priority": {
                 "type": "string",
-                "description": "Card priority",
-                "example": "low"
+                "enum": ["without", "low", "medium", "high"],
+                "example": "medium",
+                "description": "Card priority"
               },
               "deadline": {
                 "type": "string",
-                "format": "date",
-                "description": "deadline date",
-                "example": "12.13.2024"
-              },
-              "_id": {
-                "type": "string",
-                "description": "Card id",
-                "example": "662112f285746b0dae1375c0"
+                "format": "UTS",
+                "example": "1714472680",
+                "description": "Deadline date"
               }
             }
           }
@@ -1766,37 +1785,39 @@
       },
       "MoveCardRequest": {
         "type": "object",
-        "required": ["boardId", "columnId"],
+        "required": ["newColumnId", "columnId"],
         "properties": {
-          "boardId": {
-            "type": "string",
-            "description": "the board in which the task is created",
-            "example": "662220a95e39526f21e9d4c2"
-          },
           "columnId": {
             "type": "string",
-            "description": "the column in which the task is created",
-            "example": "662220a95e39526f21e9d4c2"
+            "format": "id",
+            "example": "662220a95e39526f21e9d4c2",
+            "description": "Id of a column in which the task currently is"
+          },
+          "newColumnId": {
+            "type": "string",
+            "format": "id",
+            "example": "662220a95e39526f21e9f6h4",
+            "description": "Id of a column in which the task should be moved to"
           }
         }
       },
       "MoveCardResponse": {
         "type": "object",
-        "required": ["result"],
         "properties": {
           "result": {
             "type": "object",
-            "required": ["_id", "columnId"],
             "properties": {
               "_id": {
                 "type": "string",
-                "description": "Card id",
-                "example": "662112f285746b0dae1375c0"
+                "format": "id",
+                "example": "662112f285746b0dae1375c0",
+                "description": "Card id"
               },
               "columnId": {
                 "type": "string",
-                "description": "the column in which the task was moved",
-                "example": "662220a95e39526f21e9d4c2"
+                "format": "id",
+                "example": "662220a95e39526f21e9d4c2",
+                "description": "Id of a column in which the task has been moved to"
               }
             }
           }
@@ -2030,6 +2051,7 @@
           },
           "boardId": {
             "type": "string",
+            "format": "id",
             "example": "1hf2ue37fhsbdf",
             "description": "_id of the board to add the column to"
           }
@@ -2042,7 +2064,7 @@
             "type": "string",
             "format": "id",
             "example": "283fhvue298hv02ev2",
-            "description": "Id of user who created the issue report"
+            "description": "Id of the user who created the issue report"
           },
           "email": {
             "type": "string",
