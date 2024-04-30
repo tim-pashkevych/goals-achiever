@@ -1619,10 +1619,10 @@
             "description": "Card priority"
           },
           "deadline": {
-            "type": "string",
+            "type": "number",
             "format": "UTS",
             "example": "1714472680",
-            "description": "Deadline date"
+            "description": "Deadline date in the UTS format"
           },
           "boardId": {
             "type": "string",
@@ -1640,7 +1640,6 @@
       },
       "AddCardResponse": {
         "type": "object",
-        "required": ["result"],
         "properties": {
           "result": {
             "type": "object",
@@ -1662,10 +1661,10 @@
                 "description": "Card priority"
               },
               "deadline": {
-                "type": "string",
+                "type": "number",
                 "format": "UTS",
                 "example": "1714472680",
-                "description": "Deadline date"
+                "description": "Deadline date in the UTS format"
               },
               "boardId": {
                 "type": "string",
@@ -1726,10 +1725,10 @@
             "description": "Card priority"
           },
           "deadline": {
-            "type": "string",
+            "type": "number",
             "format": "UTS",
             "example": "1714472680",
-            "description": "Deadline date"
+            "description": "Deadline date in the UTS format"
           },
           "boardId": {
             "type": "string",
@@ -1774,10 +1773,10 @@
                 "description": "Card priority"
               },
               "deadline": {
-                "type": "string",
+                "type": "number",
                 "format": "UTS",
                 "example": "1714472680",
-                "description": "Deadline date"
+                "description": "Deadline date in the UTS format"
               }
             }
           }
