@@ -3,7 +3,7 @@ import express from 'express';
 import validateBody from '../../../decorators/validateBody.js';
 import { cardAddSchema, cardUpdateSchema } from '../../../schemas/cards/index.js';
 import { cardsCtrls } from '../../../controllers/index.js';
-import { auth, authCard, authColumnAndBoard } from '../../../middlewares/index.js';
+import { auth, authColumnAndBoard } from '../../../middlewares/index.js';
 
 export const cardsRouter = express.Router({ mergeParams: true });
 

@@ -9,9 +9,7 @@ export const sendAdminMessage = async (email, message) => {
       textMessage: `Congratulation!\n\n You have received a new 'Need help' request.\n\n From: ${email}\n Message:\n ${message}`,
       htmlMessage: `<p>Congratulation!<br /><br /> You have received a new 'Need help' request.<br /><br /> <b>From:</b> ${email}<br /><b>Message:</b><br /> ${message}</p>`,
     });
-  } catch (error) {
-    // TO DO
-  }
+  } catch (error) {}
 
   return result;
 };
@@ -25,9 +23,7 @@ export const sendCustomerMessage = async (email, name) => {
       textMessage: `Dear, ${name}\n\n We have received your inquiry.\n Our specialist contact you asap.\n\n With regards,\nTaskPro`,
       htmlMessage: `<p>Dear, ${name}<br /><br /> We have received your inquiry.<br /> Our specialist contact you asap.<br /><br /> With regards,<br />TaskPro</p>`,
     });
-  } catch (error) {
-    // TO DO
-  }
+  } catch (error) {}
 
   return result;
 };

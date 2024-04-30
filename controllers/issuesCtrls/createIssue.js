@@ -9,10 +9,8 @@ const createIssue = async (req, res) => {
 
   const result = await addIssue({ ...req.body, owner });
 
-  // Send admin notification
   const adminMessage = await sendAdminMessage(CUSTOMER_SUPPORT_EMAIL, { email, message });
 
-  // Send customer notification
   const customerMessage = await sendCustomerMessage(email, req.user.name);
 
   res.status(201).json(result);
