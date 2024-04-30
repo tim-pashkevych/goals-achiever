@@ -2,14 +2,14 @@
   "openapi": "3.0.1",
   "info": {
     "version": "1.0.0",
-    "title": "Task-Pro API docs",
-    "description": "API documentation for team project 'Task Pro'. [Backend github repository](https://github.com/tim-pashkevych/goals-achiever)",
+    "title": "TaskPro API docs",
+    "description": "<p>API documentation for <a href='https://tim-pashkevych.github.io/goals-achiever-react/welcome' target='_blank'>TaskPro</a> project.</p> <p><b>TaskPro</b> tool supercharges your productivity and takes control of your tasks.</br> Before starting your project, it is essential to create a board to visualize and track all the necessary tasks and milestones.</br> This board serves as a powerful tool to organize the workflow and ensure effective collaboration among team members.</p> <p><a href='https://github.com/tim-pashkevych/goals-achiever' target='_blank'>Backend API Repository</a> </p><p><a href='https://github.com/tim-pashkevych/goals-achiever-react' target='_blank'>Frontend Repository</a> </p>",
     "license": {
       "name": "MIT",
       "url": "https://opensource.org/license/MIT"
     }
   },
-  "servers": [{ "url": "http://localhost:3000/api/v1" }],
+  "servers": [{ "url": "https://goals-achiever.onrender.com/api/v1" }, { "url": "http://localhost:3000/api/v1" }],
   "tags": [
     {
       "name": "Users",
